@@ -44,9 +44,9 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 ---
 *Projet réalisé dans le cadre de la SAé du BUT MMI de Meaux par [ I-r0k ] et [ Alex Dum ].*
 
-# 31/03 finalisation du READ ME en tant que fichier guide.
+### 31/03 finalisation du READ ME en tant que fichier guide.
 
-## 📂 Arborescence du projet (Front-end)
+##  Arborescence du projet (Front-end)
 
 Voici la structure des fichiers de l'application. Elle est divisée entre l'espace public (connexion/inscription) et l'espace privé (le dashboard et ses fonctionnalités).
 
@@ -67,3 +67,5 @@ Voici la structure des fichiers de l'application. Elle est divisée entre l'espa
     ├──  offres.html           # Liste des stages, recherche, filtres et affectations
     ├──  suivi-recherches.html # Déclaration et suivi des recherches personnelles
     └──  soutenances.html      # Planning des oraux, jurys et affichage des notes
+
+### Finition de l'arbo ( provisoire )
