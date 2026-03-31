@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes recherches - Stages MMI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .table-recherches { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table-recherches th, .table-recherches td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .table-recherches th { font-weight: 600; color: var(--text-muted); }
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+        .status-attente { background-color: #fef08a; color: #854d0e; }
+        .status-refus { background-color: #fecaca; color: #991b1b; }
+        .status-entretien { background-color: #bfdbfe; color: #1e40af; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Espace Étudiant</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="offres.html">Offres</a></li>
+                <li><a href="suivi-recherches.html" class="active">Mes recherches</a></li>
+                <li><a href="soutenances.html">Soutenance</a></li>
+                <li><a href="profil.html">Profil</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn btn-primary" style="background-color: #ef4444;">Déconnexion</a>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <section class="dashboard-section" style="min-height: auto;">
+            <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2>Suivi de mes candidatures</h2>
+                    <p>Déclarez vos recherches personnelles pour le suivi pédagogique.</p>
+                </div>
+                <button class="btn btn-primary">+ Nouvelle candidature</button>
+            </div>
+            
+            <div class="card" style="width: 100%;">
+                <table class="table-recherches">
+                    <thead>
+                        <tr>
+                            <th>Date d'envoi</th>
+                            <th>Entreprise</th>
+                            <th>Poste visé</th>
+                            <th>Contact / Moyen</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12/03/2026</td>
+                            <td>Ubisoft</td>
+                            <td>Motion Designer</td>
+                            <td>Email (RH)</td>
+                            <td><span class="status-badge status-attente">En attente</span></td>
+                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
+                        </tr>
+                        <tr>
+                            <td>08/03/2026</td>
+                            <td>Orange Business</td>
+                            <td>Intégrateur Web</td>
+                            <td>LinkedIn</td>
+                            <td><span class="status-badge status-entretien">Entretien planifié</span></td>
+                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
+                        </tr>
+                        <tr>
+                            <td>01/03/2026</td>
+                            <td>Startup XYZ</td>
+                            <td>Community Manager</td>
+                            <td>Candidature Spontanée</td>
+                            <td><span class="status-badge status-refus">Refusé</span></td>
+                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

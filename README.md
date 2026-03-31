@@ -63,7 +63,6 @@ Voici la structure des fichiers de l'application. Elle est divisée entre l'espa
 │   └──  img/                  # Logos, illustrations, avatars
 │
 └──  pages/                    # Espace Privé (Dashboard complet)
-    ├──  dashboard.html        # Tableau de bord principal (Stats, alertes)
     ├──  profil.html           # Saisie et modification des données personnelles
     ├──  offres.html           # Liste des stages, recherche, filtres et affectations
     ├──  suivi-recherches.html # Déclaration et suivi des recherches personnelles

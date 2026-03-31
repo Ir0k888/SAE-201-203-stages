@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soutenance - Stages MMI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Espace Étudiant</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="offres.html">Offres</a></li>
+                <li><a href="suivi-recherches.html">Mes recherches</a></li>
+                <li><a href="soutenances.html" class="active">Soutenance</a></li>
+                <li><a href="profil.html">Profil</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn btn-primary" style="background-color: #ef4444;">Déconnexion</a>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <section class="dashboard-section" style="min-height: auto;">
+            <div class="dashboard-header">
+                <h2>Organisation de la soutenance</h2>
+                <p>Retrouvez ici les détails de votre convocation et vos notes finales.</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card" style="border-left: 4px solid var(--primary-color);">
+                    <h3 style="margin-bottom: 15px;">Convocation</h3>
+                    <p><strong>Date :</strong> Mardi 15 Juin 2026</p>
+                    <p><strong>Heure de passage :</strong> 14h00</p>
+                    <p><strong>Salle :</strong> Amphi B104</p>
+                    <p><strong>Membres du jury :</strong> M. Martin & Mme. Durand</p>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted);">Merci de vous présenter 15 minutes avant l'heure prévue avec votre support de présentation.</p>
+                </div>
+
+                <div class="card form-card" style="max-width: none;">
+                    <h3 style="margin-bottom: 15px;">Résultats de l'évaluation</h3>
+                    
+                    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span>Note du rapport écrit (moyenne du jury) :</span>
+                        <span style="font-weight: 600;">En attente</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+                        <span>Note de la soutenance orale :</span>
+                        <span style="font-weight: 600;">En attente</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding: 15px 0 0 0; font-size: 1.2rem;">
+                        <span style="font-weight: 500;">Moyenne Finale Stage :</span>
+                        <span style="font-weight: 700; color: var(--primary-color);">-- / 20</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

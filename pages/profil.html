@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Stages MMI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Espace Étudiant</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="offres.html" >Offres</a></li>
+                <li><a href="suivi-recherches.html">Mes recherches</a></li>
+                <li><a href="soutenances.html">Soutenance</a></li>
+                <li><a href="profil.html" class="active">Profil</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn btn-primary" style="background-color: #ef4444;">Déconnexion</a>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <section class="dashboard-section" style="min-height: auto;">
+            <div class="dashboard-header">
+                <h2>Mon Profil</h2>
+                <p>Mettez à jour vos informations personnelles et académiques.</p>
+            </div>
+            
+            <div class="card form-card" style="max-width: 800px;">
+                <form action="#" method="POST" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="matricule">Numéro étudiant (Matricule)</label>
+                        <input type="text" id="matricule" value="20245678" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse E-mail</label>
+                        <input type="email" id="email" value="jean.dupont@etudiant.univ.fr" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" value="Dupont">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" value="Jean">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" id="telephone" placeholder="06 XX XX XX XX">
+                    </div>
+                    <div class="form-group">
+                        <label for="adresse">Adresse postale</label>
+                        <input type="text" id="adresse" placeholder="12 rue de la République, 77100 Meaux">
+                    </div>
+                    <div class="form-group">
+                        <label for="promo">Promotion / Année</label>
+                        <input type="text" id="promo" value="MMI 2" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupe">Groupe (TD/TP)</label>
+                        <input type="text" id="groupe" value="TD2 - TP3" readonly>
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <button type="submit" class="btn btn-primary btn-full">Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
