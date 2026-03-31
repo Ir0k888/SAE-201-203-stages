@@ -1,38 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Effet d'ombre sur la navbar au scroll
-    const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)';
-        } else {
-            navbar.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
-        }
-    });
+    // 1. Toggle Login/Inscription
+    const signUpBtn = document.getElementById('signUp');
+    const signInBtn = document.getElementById('signIn');
+    const container = document.getElementById('login-container');
 
-    // 2. Mise à jour du lien actif dans la navigation en fonction du scroll
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    if (signUpBtn && signInBtn) {
+        signUpBtn.addEventListener('click', () => container.classList.add("right-panel-active"));
+        signInBtn.addEventListener('click', () => container.classList.remove("right-panel-active"));
+    }
 
-    window.addEventListener('scroll', () => {
-        let current = '';
+    // 2. Burger Menu Mobile
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('nav-links');
+    if (burger) {
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navLinks.classList.toggle('hidden');
+            navLinks.classList.toggle('flex');
+        });
+    }
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            // On vérifie si on est dans la zone de la section
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
+    // 3. Reveal au scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('opacity-0', 'translate-y-7');
+                entry.target.classList.add('opacity-100', 'translate-y-0');
             }
         });
+    }, { threshold: 0.15 });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });

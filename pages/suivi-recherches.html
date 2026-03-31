@@ -1,83 +1,63 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes recherches - Stages MMI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind.config.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        .table-recherches { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .table-recherches th, .table-recherches td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        .table-recherches th { font-weight: 600; color: var(--text-muted); }
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
-        .status-attente { background-color: #fef08a; color: #854d0e; }
-        .status-refus { background-color: #fecaca; color: #991b1b; }
-        .status-entretien { background-color: #bfdbfe; color: #1e40af; }
-    </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans">
 
-    <header class="navbar">
-        <div class="logo">Espace Étudiant</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="../index.html">Dashboard</a></li>
-                <li><a href="offres.html">Offres</a></li>
-                <li><a href="suivi-recherches.html" class="active">Mes recherches</a></li>
-                <li><a href="soutenances.html">Soutenance</a></li>
-                <li><a href="profil.html">Profil</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="btn btn-primary" style="background-color: #ef4444;">Déconnexion</a>
-    </header>
+    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white/90 backdrop-blur-md z-50 border-b border-slate-100 transition-shadow duration-300">
+        <div class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">MMI Stages</div>
+        
+        <div class="burger hidden flex-col justify-center gap-1.5 w-7 h-5 cursor-pointer z-[1100] md:hidden" id="burger">
+            <span class="block h-0.5 w-full bg-slate-800 rounded transition-transform duration-300"></span>
+            <span class="block h-0.5 w-full bg-slate-800 rounded transition-opacity duration-300"></span>
+            <span class="block h-0.5 w-full bg-slate-800 rounded transition-transform duration-300"></span>
+        </div>
 
-    <main style="padding-top: 100px;">
-        <section class="dashboard-section" style="min-height: auto;">
-            <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h2>Suivi de mes candidatures</h2>
-                    <p>Déclarez vos recherches personnelles pour le suivi pédagogique.</p>
-                </div>
-                <button class="btn btn-primary">+ Nouvelle candidature</button>
+        <ul id="nav-links" class="hidden md:flex gap-8 items-center absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent flex-col md:flex-row py-6 md:py-0 shadow-lg md:shadow-none">
+            <li><a href="../index.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Accueil</a></li>
+            <li><a href="offres.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Offres</a></li>
+            <li><a href="suivi-recherches.html" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Recherches</a></li>
+            <li><a href="soutenances.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Soutenance</a></li>
+            <li><a href="profil.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Profil</a></li>
+            <li><a href="../login.html" class="md:ml-4 bg-red-500 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-red-600 transition-colors">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <main class="pt-32 pb-16 px-6 max-w-7xl mx-auto min-h-screen">
+        <section class="reveal opacity-0 translate-y-7 transition-all duration-700 ease-out mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800">Suivi des candidatures</h2>
+                <p class="text-slate-500 mt-2">Déclarez vos recherches personnelles.</p>
             </div>
-            
-            <div class="card" style="width: 100%;">
-                <table class="table-recherches">
+            <button class="rounded-full bg-gradient-to-r from-brandStart to-brandEnd text-white font-bold py-2.5 px-6 hover:scale-105 transition-transform shadow-md">
+                + Nouvelle candidature
+            </button>
+        </section>
+        
+        <section class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr>
-                            <th>Date d'envoi</th>
-                            <th>Entreprise</th>
-                            <th>Poste visé</th>
-                            <th>Contact / Moyen</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
+                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 text-sm uppercase tracking-wider">
+                            <th class="py-4 px-6 font-medium">Entreprise</th>
+                            <th class="py-4 px-6 font-medium">Statut</th>
+                            <th class="py-4 px-6 font-medium text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>12/03/2026</td>
-                            <td>Ubisoft</td>
-                            <td>Motion Designer</td>
-                            <td>Email (RH)</td>
-                            <td><span class="status-badge status-attente">En attente</span></td>
-                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
-                        </tr>
-                        <tr>
-                            <td>08/03/2026</td>
-                            <td>Orange Business</td>
-                            <td>Intégrateur Web</td>
-                            <td>LinkedIn</td>
-                            <td><span class="status-badge status-entretien">Entretien planifié</span></td>
-                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
-                        </tr>
-                        <tr>
-                            <td>01/03/2026</td>
-                            <td>Startup XYZ</td>
-                            <td>Community Manager</td>
-                            <td>Candidature Spontanée</td>
-                            <td><span class="status-badge status-refus">Refusé</span></td>
-                            <td><a href="#" style="color: var(--primary-color);">Modifier</a></td>
+                    <tbody class="text-sm divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-4 px-6 font-semibold text-slate-800">Ubisoft</td>
+                            <td class="py-4 px-6">
+                                <span class="bg-yellow-100 text-yellow-800 py-1 px-3 rounded-full text-xs font-semibold">En attente</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <a href="#" class="text-brandStart hover:text-brandEnd font-medium">Modifier</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
