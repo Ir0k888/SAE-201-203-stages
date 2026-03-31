@@ -4,19 +4,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const signInBtn = document.getElementById('signIn');
     const container = document.getElementById('login-container');
 
-    if (signUpBtn && signInBtn) {
+    if (signUpBtn && signInBtn && container) {
         signUpBtn.addEventListener('click', () => container.classList.add("right-panel-active"));
         signInBtn.addEventListener('click', () => container.classList.remove("right-panel-active"));
     }
 
-    // 2. Burger Menu Mobile
+    // 2. Burger Menu Mobile (Fixé)
     const burger = document.getElementById('burger');
     const navLinks = document.getElementById('nav-links');
-    if (burger) {
+    
+    if (burger && navLinks) {
         burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            navLinks.classList.toggle('hidden');
+            burger.classList.toggle('active'); // Anime la croix
+            navLinks.classList.toggle('hidden'); // Alterne entre display: none et display: flex
             navLinks.classList.toggle('flex');
+        });
+
+        // Ferme le menu quand on clique sur un lien (sur mobile)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navLinks.classList.add('hidden');
+                navLinks.classList.remove('flex');
+            });
         });
     }
 

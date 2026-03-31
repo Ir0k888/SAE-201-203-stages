@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Soutenance - Stages MMI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../assets/js/tailwind.config.js"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans">
+<body class="bg-slate-100 text-slate-800 font-sans">
 
-    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white/90 backdrop-blur-md z-50 border-b border-slate-100 transition-shadow duration-300">
+    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white shadow-md z-50">
         <div class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">MMI Stages</div>
         
         <div class="burger hidden flex-col justify-center gap-1.5 w-7 h-5 cursor-pointer z-[1100] md:hidden" id="burger">
@@ -18,13 +19,13 @@
             <span class="block h-0.5 w-full bg-slate-800 rounded transition-transform duration-300"></span>
         </div>
 
-        <ul id="nav-links" class="hidden md:flex gap-8 items-center absolute md:static top-full left-0 w-full md:w-auto bg-white md:bg-transparent flex-col md:flex-row py-6 md:py-0 shadow-lg md:shadow-none">
+        <ul id="nav-links" class="hidden absolute top-full left-0 w-full bg-white shadow-lg flex-col py-6 md:static md:flex md:flex-row md:w-auto md:bg-transparent md:shadow-none md:py-0 gap-8 items-center">
             <li><a href="../index.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Accueil</a></li>
             <li><a href="offres.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Offres</a></li>
             <li><a href="suivi-recherches.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Recherches</a></li>
             <li><a href="soutenances.html" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Soutenance</a></li>
             <li><a href="profil.html" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Profil</a></li>
-            <li><a href="../login.html" class="md:ml-4 bg-red-500 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-red-600 transition-colors">Déconnexion</a></li>
+            <li><a href="../login.html" class="md:ml-4 bg-red-500 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-red-600 transition-colors shadow-sm">Déconnexion</a></li>
         </ul>
     </nav>
 
@@ -35,27 +36,27 @@
         </section>
         
         <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out bg-white p-8 rounded-xl shadow-sm border border-slate-100 border-l-4 border-l-brandStart">
+            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out bg-white p-8 rounded-2xl shadow-lg border-l-4 border-l-brandStart">
                 <h3 class="text-xl font-bold text-slate-800 mb-6">Votre Convocation</h3>
                 <div class="mb-4">
                     <span class="block text-sm text-slate-500 mb-1">Date & Heure</span>
-                    <span class="font-semibold text-lg text-slate-800">Mardi 15 Juin 2026 à 14h00</span>
+                    <span class="font-bold text-lg text-brandStart">Mardi 15 Juin 2026 à 14h00</span>
                 </div>
                 <div class="mb-4">
                     <span class="block text-sm text-slate-500 mb-1">Salle</span>
-                    <span class="font-semibold text-slate-800">Amphi B104</span>
+                    <span class="font-bold text-slate-800">Amphi B104</span>
                 </div>
             </div>
 
-            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-200 ease-out bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-200 ease-out bg-white p-8 rounded-2xl shadow-lg">
                 <h3 class="text-xl font-bold text-slate-800 mb-6">Résultats</h3>
                 <div class="flex justify-between items-center py-4 border-b border-slate-100">
-                    <span class="text-slate-600">Note du rapport</span>
-                    <span class="bg-slate-100 text-slate-500 py-1 px-3 rounded font-semibold text-sm">En attente</span>
+                    <span class="text-slate-600 font-medium">Note du rapport</span>
+                    <span class="bg-slate-100 text-slate-500 py-1.5 px-3 rounded-md font-bold text-sm">En attente</span>
                 </div>
                 <div class="flex justify-between items-center pt-6 mt-2">
-                    <span class="text-lg font-medium text-slate-800">Moyenne Finale</span>
-                    <span class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">-- / 20</span>
+                    <span class="text-lg font-bold text-slate-800">Moyenne Finale</span>
+                    <span class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">-- / 20</span>
                 </div>
             </div>
         </section>

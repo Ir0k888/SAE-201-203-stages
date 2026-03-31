@@ -1,33 +1,16 @@
-/* Effet de soulignement dynamique sur la Navbar */
-.nav-link {
-    position: relative;
-    padding-bottom: 4px;
-}
+.nav-link { position: relative; padding-bottom: 4px; }
 
 .nav-link::after {
     content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
+    position: absolute; bottom: 0; left: 0; width: 0; height: 3px;
     background: linear-gradient(90deg, #632196, #965BC2);
-    transition: width 0.3s ease;
-    border-radius: 3px;
+    transition: width 0.3s ease; border-radius: 3px;
 }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-.nav-link:hover::after, 
-.nav-link.active::after {
-    width: 100%;
-}
-
-/* Mécanique du panneau coulissant Login (Inspiré de VPTOURS) */
 .login-container.right-panel-active .sign-in-container { transform: translateX(100%); }
 .login-container.right-panel-active .sign-up-container {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-    animation: showForm 0.6s;
+    transform: translateX(100%); opacity: 1; z-index: 5; animation: showForm 0.6s;
 }
 .login-container.right-panel-active .overlay-container { transform: translateX(-100%); }
 .login-container.right-panel-active .overlay { transform: translateX(50%); }
@@ -39,7 +22,6 @@
     50%, 100% { opacity: 1; z-index: 5; }
 }
 
-/* Burger Menu Animation */
 .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .burger.active span:nth-child(2) { opacity: 0; }
 .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }

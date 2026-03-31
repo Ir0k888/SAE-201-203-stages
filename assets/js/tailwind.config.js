@@ -7,7 +7,7 @@ tailwind.config = {
                 brandEnd: '#965BC2',
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
+                sans: ['Roboto', 'sans-serif'],
             }
         }
     }

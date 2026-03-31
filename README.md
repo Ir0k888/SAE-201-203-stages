@@ -45,6 +45,8 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 *Projet réalisé dans le cadre de la SAé du BUT MMI de Meaux par [ I-r0k ] et [ Alex Dum ].*
 
 ### 31/03 finalisation du READ ME en tant que fichier guide.
+### 31/03 Finition de l'arbo ( provisoire )
+### 31/03 tailwindcss + js pour la base police etc, style provisoire, intégration des features de VPtours SAE 105 ( I-r0k )
 
 ##  Arborescence du projet (Front-end)
 
@@ -66,6 +68,5 @@ Voici la structure des fichiers de l'application. Elle est divisée entre l'espa
     ├──  profil.html           # Saisie et modification des données personnelles
     ├──  offres.html           # Liste des stages, recherche, filtres et affectations
     ├──  suivi-recherches.html # Déclaration et suivi des recherches personnelles
-    └──  soutenances.html      # Planning des oraux, jurys et affichage des notes ```
-
-### 31/03 Finition de l'arbo ( provisoire )
+    └──  soutenances.html      # Planning des oraux, jurys et affichage des notes 
+    text```
