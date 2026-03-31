@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Stages - MMI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Stages MMI</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#accueil" class="active">Accueil</a></li>
+                <li><a href="#inscription">Inscription</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+            </ul>
+        </nav>
+        <a href="#inscription" class="btn btn-primary">Se connecter</a>
+    </header>
+
+    <main>
+        <section id="accueil" class="hero-section">
+            <div class="hero-content">
+                <h1>Plateforme de gestion des stages</h1>
+                <p>Département Métiers du Multimédia et de l'Internet - IUT de Meaux. Gérez vos candidatures, vos conventions et votre suivi de stage en un seul endroit.</p>
+                <a href="#dashboard" class="btn btn-primary btn-large">Accéder à mon espace</a>
+            </div>
+        </section>
+
+        <section id="inscription" class="form-section">
+            <div class="card form-card">
+                <h2>Créer un compte étudiant</h2>
+                <p class="subtitle">Utilisez votre adresse universitaire.</p>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="email">Adresse E-mail</label>
+                        <input type="email" id="email" placeholder="prenom.nom@etudiant.univ.fr" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">S'inscrire</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="dashboard" class="dashboard-section">
+            <div class="dashboard-header">
+                <h2>Tableau de bord</h2>
+                <p>Bienvenue sur votre espace de suivi.</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card stat-card">
+                    <div class="stat-title">Offres disponibles</div>
+                    <div class="stat-value">42</div>
+                    <div class="stat-desc">Mises à jour aujourd'hui</div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-title">Candidatures en cours</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-desc">En attente de réponse</div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-title">Statut du stage</div>
+                    <div class="stat-value highlight">Non validé</div>
+                    <div class="stat-desc">Action requise</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
