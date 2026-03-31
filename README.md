@@ -66,6 +66,6 @@ Voici la structure des fichiers de l'application. Elle est divisée entre l'espa
     ├──  profil.html           # Saisie et modification des données personnelles
     ├──  offres.html           # Liste des stages, recherche, filtres et affectations
     ├──  suivi-recherches.html # Déclaration et suivi des recherches personnelles
-    └──  soutenances.html      # Planning des oraux, jurys et affichage des notes
+    └──  soutenances.html      # Planning des oraux, jurys et affichage des notes ```
 
-### Finition de l'arbo ( provisoire )
+### 31/03 Finition de l'arbo ( provisoire )
