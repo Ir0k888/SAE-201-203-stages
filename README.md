@@ -47,6 +47,7 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 ### 31/03 finalisation du READ ME en tant que fichier guide.
 ### 31/03 Finition de l'arbo ( provisoire )
 ### 31/03 tailwindcss + js pour la base police etc, style provisoire, intégration des features de VPtours SAE 105 ( I-r0k )
+### 07/04 footer + js tps 3 et 5 offres et recherches, style global ajusté ( I-r0k )
 
 ##  Arborescence du projet (Front-end)
 
