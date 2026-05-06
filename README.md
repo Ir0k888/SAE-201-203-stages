@@ -12,11 +12,12 @@ Ce projet consiste à créer une application web complète permettant de gérer 
 
 ## Acteurs et Rôles (Gestion des droits)
 L'application intègre un système d'authentification et d'autorisation complexe divisé en 5 rôles :
-* **Étudiant :** Gestion du profil, consultation des offres, déclaration de recherche personnelle.
-* **Responsable des stages :** Validation des comptes, publication des offres, affectation, suivi des étudiants, organisation des oraux.
-* **Jury de soutenance :** Saisie et consultation des notes (rapport + oral).
-* **Responsable de formation (Chef de département) :** Accès au tableau de bord global et aux statistiques.
-* **Administrateur :** Tous les droits + gestion technique des comptes.
+* **Étudiant :** Gestion du profil, consultation des offres, déclaration de recherche personnelle, soutenance, rapport de stage.
+* **Enseignants :** sous-rôles -->
+* ***Responsable des stages :** Validation des comptes, publication des offres, affectation, suivi des étudiants, organisation des oraux.
+* ***Jury de soutenance :** Saisie et consultation des notes (rapport + oral).
+* ***Responsable de formation (Chef de département) :** Accès au tableau de bord global et aux statistiques.
+* ***Administrateur :** Tous les droits + gestion technique des comptes.
 
 ## Charte Graphique & UI/UX
 * **Couleur Principale (Primary) :** [ INSCRIRE LE CODE HEXA ICI, ex: #0D6EFD ]
