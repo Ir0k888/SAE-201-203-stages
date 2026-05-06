@@ -38,7 +38,7 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 * **`index.php`** : Point d'entrée de l'application.
 
 ## Base de Données (MCD/MPD)
-[ EXPLIQUER ICI BRIÈVEMENT VOS CHOIX DE MODÉLISATION QUAND ILS SERONT FAITS ]
+[ EXPLIQUER ICI BRIÈVEMENT NOS CHOIX DE MODÉLISATION QUAND ILS SERONT FAITS ]
 * **Lien vers le MCD :** [ AJOUTER LE LIEN OU L'IMAGE DU MCD ]
 * **Lien vers le dictionnaire de données :** [ AJOUTER LE LIEN ]
 ---
