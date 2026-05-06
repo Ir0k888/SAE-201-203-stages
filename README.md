@@ -13,7 +13,7 @@ Ce projet consiste à créer une application web complète permettant de gérer 
 ## Acteurs et Rôles (Gestion des droits)
 L'application intègre un système d'authentification et d'autorisation complexe divisé en 5 rôles :
 * **Étudiant :** Gestion du profil, consultation des offres, déclaration de recherche personnelle, soutenance, rapport de stage.
-* **Enseignants :** sous-rôles --> ( donc ils sont tous enseignants )
+* **Enseignants :** fonction --> ( donc ils sont tous enseignants )
 * ***Responsable des stages :** Validation des comptes, publication des offres, affectation, suivi des étudiants, organisation des oraux, convention de stage.
 * ***Jury de soutenance :** Saisie et consultation des notes (rapport + oral).
 * ***Responsable de formation (Chef de département) :** Accès au tableau de bord global et aux statistiques.
