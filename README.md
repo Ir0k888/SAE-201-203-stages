@@ -55,20 +55,33 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 Voici la structure des fichiers de l'application. Elle est divisée entre l'espace public (connexion/inscription) et l'espace privé (le dashboard et ses fonctionnalités).
 
 ```text
- sae-gestion-stages/
-├──  index.html                # Accueil & Connexion (Point d'entrée)
-├──  inscription.html          # Formulaire de création de compte
+  sae-stages/
+├──  actions/                  # Scripts PHP de traitement pur (sans HTML)
+│   ├──  add_recherche.php     # Traitement de l'ajout d'une candidature
+│   └──  login_action.php      # Traitement et vérification de la connexion
 │
-├──  assets/                   # Ressources statiques
+├──  assets/                   # Ressources statiques frontend
 │   ├──  css/
-│   │   └──  style.css         # Styles globaux (Variables :root, charte graphique)
-│   ├──  js/
-│   │   └──  script.js         # Logique front (Smooth scroll, menu dynamique)
-│   └──  img/                  # Logos, illustrations, avatars
+│   │   └──  style.css         # Animations et surcouche CSS spécifique
+│   └──  js/
+│       ├──  script.js         # Logique globale, menu burger, modals et Ajax
+│       └──  tailwind.config.js# Configuration centralisée de la charte graphique
 │
-└──  pages/                    # Espace Privé (Dashboard complet)
-    ├──  profil.html           # Saisie et modification des données personnelles
-    ├──  offres.html           # Liste des stages, recherche, filtres et affectations
-    ├──  suivi-recherches.html # Déclaration et suivi des recherches personnelles
-    └──  soutenances.html      # Planning des oraux, jurys et affichage des notes 
-    text```
+├──  config/                   
+│   └──  database.php          # Connexion centralisée à la base de données via PDO
+│
+├──  database/                 
+│   └──  init_db.sql           # Script SQL global d'initialisation et jeu d'essai
+│
+├──  includes/                 # Composants d'affichage réutilisables
+│   ├──  footer.php            # Pied de page global (Inspiré de Fiddler)
+│   └──  header.php            # En-tête, métadonnées et barre de navigation
+│
+├──  pages/                    # Vues spécifiques de l'espace privé connecté
+│   ├──  offres.php            # Liste des offres, recherche et modal de détail
+│   ├──  profil.php            # Consultation et édition des données de l'étudiant
+│   ├──  soutenances.php       # Détails de la convocation et relevé de notes
+│   └──  suivi-recherches.php  # Formulaire d'ajout, statistiques et tri des recherches
+│
+├──  index.php                 # Page d'accueil de l'espace connecté (Espace Étudiant)
+└──  login.php                 # Page d'authentification (Panneau coulissant)
