@@ -47,7 +47,7 @@ CREATE TABLE Enseignant (
     etablissement VARCHAR(150),
     numero_telephone VARCHAR(20),
     adresse_postale TEXT,
-    role ENUM('Responsable de stage', 'Enseignant', 'Maitre de stage', 'Chef de departement', 'Administrateur') NOT NULL
+    role ENUM('Responsable de stage', 'Enseignant', 'Responsable de stage', 'Chef de departement', 'Administrateur') NOT NULL
 );
 
 INSERT INTO Etudiant (email, mot_de_passe) VALUES ('etudiant@univ.fr', 'etudiant123');
