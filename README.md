@@ -52,36 +52,34 @@ Structure des dossiers de base pour maintenir un code propre (séparation logiqu
 
 ##  Arborescence du projet (Front-end)
 
-Voici la structure des fichiers de l'application. Elle est divisée entre l'espace public (connexion/inscription) et l'espace privé (le dashboard et ses fonctionnalités).
-
 ```text
   sae-stages/
-├──  actions/                  # Scripts PHP de traitement pur (sans HTML)
-│   ├──  add_recherche.php     # Traitement de l'ajout d'une candidature
-│   └──  login_action.php      # Traitement et vérification de la connexion
-│
-├──  assets/                   # Ressources statiques frontend
-│   ├──  css/
-│   │   └──  style.css         # Animations et surcouche CSS spécifique
-│   └──  js/
-│       ├──  script.js         # Logique globale, menu burger, modals et Ajax
-│       └──  tailwind.config.js# Configuration centralisée de la charte graphique
-│
-├──  config/                   
-│   └──  database.php          # Connexion centralisée à la base de données via PDO
-│
-├──  database/                 
-│   └──  init_db.sql           # Script SQL global d'initialisation et jeu d'essai
-│
-├──  includes/                 # Composants d'affichage réutilisables
-│   ├──  footer.php            # Pied de page global (Inspiré de Fiddler)
-│   └──  header.php            # En-tête, métadonnées et barre de navigation
-│
-├──  pages/                    # Vues spécifiques de l'espace privé connecté
-│   ├──  offres.php            # Liste des offres, recherche et modal de détail
-│   ├──  profil.php            # Consultation et édition des données de l'étudiant
-│   ├──  soutenances.php       # Détails de la convocation et relevé de notes
-│   └──  suivi-recherches.php  # Formulaire d'ajout, statistiques et tri des recherches
-│
-├──  index.php                 # Page d'accueil de l'espace connecté (Espace Étudiant)
-└──  login.php                 # Page d'authentification (Panneau coulissant)
+├──  actions/                   # Scripts PHP de traitement pur (sans HTML)
+│   ├──  add_recherche.php      # Traitement de l'ajout d'une candidature
+│   └──  login_action.php       # Traitement et vérification de la connexion
+│ 
+├──  assets/                    # Ressources statiques frontend
+│   ├──  css/ 
+│   │   └──  style.css          # Animations et surcouche CSS spécifique
+│   └──  js/ 
+│       ├──  script.js          # Logique globale, menu burger, modals et Ajax
+│       └──  tailwind.config.js # Configuration centralisée de la charte graphique
+│ 
+├──  config/                    
+│   └──  database.php           # Connexion centralisée à la base de données via PDO
+│ 
+├──  database/                  
+│   └──  init_db.sql            # Script SQL global d'initialisation et jeu d'essai
+│ 
+├──  includes/                  # Composants d'affichage réutilisables
+│   ├──  footer.php             # Pied de page global (Inspiré de Fiddler)
+│   └──  header.php             # En-tête, métadonnées et barre de navigation
+│ 
+├──  pages/                     # Vues spécifiques de l'espace privé connecté
+│   ├──  offres.php             # Liste des offres, recherche et modal de détail
+│   ├──  profil.php             # Consultation et édition des données de l'étudiant
+│   ├──  soutenances.php        # Détails de la convocation et relevé de notes
+│   └──  suivi-recherches.php   # Formulaire d'ajout, statistiques et tri des recherches
+│ 
+├──  index.php                  # Page d'accueil de l'espace connecté (Espace Étudiant)
+└──  login.php                  # Page d'authentification (Panneau coulissant)
