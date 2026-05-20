@@ -50,6 +50,13 @@ CREATE TABLE Enseignant (
     role ENUM('Responsable de stage', 'Enseignant', 'Maitre de stage', 'Chef de departement', 'Administrateur') NOT NULL
 );
 
+INSERT INTO Etudiant (email, mot_de_passe) VALUES ('etudiant@univ.fr', 'etudiant123');
+INSERT INTO Enseignant (email, mot_de_passe, role) VALUES 
+('enseignant@univ.fr', 'enseignant123', 'Enseignant'),
+('resp@univ.fr', 'resp123', 'Responsable de stage'),
+('chef@univ.fr', 'chef123', 'Chef de departement'),
+('admin@univ.fr', 'admin123', 'Administrateur');
+
 CREATE TABLE Offre_de_stage (
     id_offre_de_stage INT AUTO_INCREMENT PRIMARY KEY,
     titre_offre VARCHAR(200) NOT NULL,

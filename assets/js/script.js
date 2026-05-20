@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         signInBtn.addEventListener('click', () => container.classList.remove("right-panel-active"));
     }
 
-
     // ==========================================
     // 2. MENU BURGER MOBILE
     // ==========================================
@@ -21,12 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (burger && navLinks) {
         burger.addEventListener('click', () => {
-            burger.classList.toggle('active'); // Animation de la croix
-            navLinks.classList.toggle('hidden'); // Alterne l'affichage Tailwind
+            burger.classList.toggle('active'); 
+            navLinks.classList.toggle('hidden'); 
             navLinks.classList.toggle('flex');
         });
 
-        // Ferme le menu quand on clique sur un lien (sur mobile)
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 burger.classList.remove('active');
@@ -36,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // ==========================================
     // 3. APPARITION AU SCROLL (REVEAL)
     // ==========================================
@@ -45,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.remove('opacity-0', 'translate-y-7');
                 entry.target.classList.add('opacity-100', 'translate-y-0');
-                // Optionnel : observer.unobserve(entry.target); si on veut que ça n'arrive qu'une fois
             }
         });
     }, { threshold: 0.15 });
@@ -59,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const offresGrid = document.getElementById('offres-grid');
     const searchInput = document.getElementById('search-input');
     
-    // Fausse base de données (Mock)
     const mockOffres = [
         {
             id: 1,
@@ -82,26 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
             remun: "Non rémunéré",
             contact: "recrutement@comco.fr",
             skills: ["Gestion de projet", "WordPress", "Aisance relationnelle"]
-        },
-        {
-            id: 3,
-            title: "UI/UX Designer Junior",
-            company: "Studio Créa — Meaux (77)",
-            promo: "MMI 2",
-            desc: "Refonte de l'application mobile d'une startup locale. Création de wireframes, maquettes haute fidélité et prototypage interactif sur Figma.",
-            period: "01/04/2026 - 31/05/2026 (8 semaines)",
-            remun: "Gratification légale",
-            contact: "hello@studiocrea.design",
-            skills: ["Figma", "Maquettage", "Tests utilisateurs"]
         }
     ];
 
     if (offresGrid) {
-        
-        // Fonction d'affichage des cartes (Génération DOM dynamique)
         function renderOffres(offres) {
             offresGrid.innerHTML = ''; 
-            
             if (offres.length === 0) {
                 offresGrid.innerHTML = '<p class="text-slate-500 italic col-span-full">Aucune offre ne correspond à votre recherche.</p>';
                 return;
@@ -110,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             offres.forEach(offre => {
                 const card = document.createElement('div');
                 card.className = 'opacity-0 translate-y-4 animate-[fadeInUp_0.5s_ease-out_forwards] bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between cursor-pointer';
-                
                 card.innerHTML = `
                     <div>
                         <div class="flex justify-between items-start mb-2">
@@ -124,17 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         Consulter l'offre
                     </button>
                 `;
-
-                // Écouteur de clic pour ouvrir le modal (Comme le TP5)
                 card.addEventListener('click', () => openModal(offre.id));
                 offresGrid.appendChild(card);
             });
         }
 
-        // Initialisation affichage offres
         renderOffres(mockOffres);
 
-        // Barre de recherche en temps réel (Filtre tableau JS)
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();
@@ -148,29 +124,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Modal Logic (Offres) ---
     const modal = document.getElementById('modal');
     const modalClose = document.getElementById('modal-close');
     const modalPostuler = document.getElementById('modal-postuler');
 
-    // Fonction asynchrone pour simuler l'API Fetch
     async function openModal(id) {
         if(!modal) return;
-
-        // Reset et affichage du loader
         document.getElementById('modal-title').textContent = 'Chargement...';
         document.getElementById('modal-company').textContent = '';
         document.getElementById('modal-loader').classList.remove('hidden');
         document.getElementById('modal-content').classList.add('hidden');
         if(modalPostuler) modalPostuler.disabled = true;
-        
         modal.classList.remove('hidden');
 
-        // Simulation d'un délai réseau (fetch)
         await new Promise(resolve => setTimeout(resolve, 600));
 
         const offre = mockOffres.find(o => o.id === id);
-
         if (offre) {
             document.getElementById('modal-title').textContent = offre.title;
             document.getElementById('modal-company').textContent = offre.company;
@@ -178,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('modal-period').textContent = offre.period;
             document.getElementById('modal-remun').textContent = offre.remun;
             document.getElementById('modal-contact').textContent = offre.contact;
-            
             document.getElementById('modal-tags').innerHTML = `<span class="bg-purple-100 text-brandStart px-3 py-1 rounded-full text-xs font-bold">${offre.promo}</span>`;
 
             const skillsContainer = document.getElementById('modal-skills');
@@ -207,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // ==========================================
     // 5. MODULE SUIVI DES RECHERCHES (Inspiré du TP 3)
     // ==========================================
@@ -219,19 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputPoste = document.getElementById('input-poste');
     const inputStatut = document.getElementById('input-statut');
 
-    // Base de données simulée modifiable (let au lieu de const)
     let candidatures = [
         { id: 1, entreprise: 'Ubisoft', poste: 'Motion Designer', statut: 'attente', dateTimestamp: 1710240000000 },
-        { id: 2, entreprise: 'Orange Business', poste: 'Intégrateur Web', statut: 'entretien', dateTimestamp: 1709894400000 },
-        { id: 3, entreprise: 'Startup XYZ', poste: 'Community Manager', statut: 'refus', dateTimestamp: 1709289600000 }
+        { id: 2, entreprise: 'Orange Business', poste: 'Intégrateur Web', statut: 'entretien', dateTimestamp: 1709894400000 }
     ];
 
     if (candidaturesGrid) {
-        
-        // Fonction d'affichage des candidatures
         function afficherCandidatures(liste) {
             candidaturesGrid.innerHTML = ''; 
-            
             if (liste.length === 0) {
                 candidaturesGrid.innerHTML = '<p class="text-slate-500 italic">Aucune candidature pour le moment.</p>';
                 return;
@@ -282,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Fonction pour calculer et afficher les stats (reduce/filter du TP3)
         function afficherStatsRecherches() {
             if (candidatures.length === 0) {
                 if(statsRecherches) statsRecherches.innerHTML = '';
@@ -291,8 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const total = candidatures.length;
             const entretiens = candidatures.filter(c => c.statut === 'entretien').length;
-            const refus = candidatures.filter(c => c.statut === 'refus').length;
-            
             const taux = total > 0 ? ((entretiens / total) * 100).toFixed(0) : 0;
 
             if(statsRecherches) {
@@ -313,10 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Fonction de tri (sort du TP3)
         function appliquerTriRecherches() {
             if(!selectTriRecherches) return;
-            
             const tri = selectTriRecherches.value;
             let copie = [...candidatures]; 
             
@@ -328,11 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ordre = { 'entretien': 1, 'attente': 2, 'refus': 3 };
                 copie.sort((a, b) => ordre[a.statut] - ordre[b.statut]);
             }
-
             afficherCandidatures(copie);
         }
 
-        // Ajout d'une recherche
         if (btnAjouterRecherche) {
             btnAjouterRecherche.addEventListener('click', () => {
                 const entreprise = inputEntreprise.value.trim();
@@ -361,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Fonction globale (window) pour pouvoir être appelée depuis un onclick HTML
         window.supprimerCandidature = function(id) {
             candidatures = candidatures.filter(c => c.id !== id);
             afficherStatsRecherches();
@@ -370,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (selectTriRecherches) selectTriRecherches.addEventListener('change', appliquerTriRecherches);
 
-        // Appel initial
         afficherStatsRecherches();
         appliquerTriRecherches();
     }
