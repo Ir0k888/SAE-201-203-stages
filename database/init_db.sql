@@ -2,35 +2,25 @@
 -- INITIALISATION DE LA BASE DE DONNÉES : SAÉ GESTION DES STAGES MMI
 -- ==============================================================================
 
--- 1. Création de la base et sélection
 CREATE DATABASE IF NOT EXISTS sae_stages_mmi CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE sae_stages_mmi;
 
 -- ==============================================================================
--- 2. NETTOYAGE DE LA BASE (Drop dans l'ordre inverse des contraintes)
+-- NETTOYAGE
 -- ==============================================================================
-DROP TABLE IF EXISTS Etre_jury;
-DROP TABLE IF EXISTS Prise_en_charge;
-DROP TABLE IF EXISTS Postuler;
-DROP TABLE IF EXISTS Soutenance;
-DROP TABLE IF EXISTS Stage;
-DROP TABLE IF EXISTS Recherche_de_stage;
-DROP TABLE IF EXISTS Jury_de_soutenance;
-DROP TABLE IF EXISTS Offre_de_stage;
-DROP TABLE IF EXISTS Enseignant;
-DROP TABLE IF EXISTS Etudiant;
+DROP TABLE IF EXISTS Etre_jury, Prise_en_charge, Postuler, Soutenance, Stage, Recherche_de_stage, Jury_de_soutenance, Offre_de_stage, Enseignant, Etudiant;
 
 -- ==============================================================================
--- 3. CRÉATION DES TABLES PRINCIPALES (Sans clés étrangères)
+-- CRÉATION DES TABLES PRINCIPALES
 -- ==============================================================================
 
 CREATE TABLE Etudiant (
     id_etudiant INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
+    nom VARCHAR(100), 
+    prenom VARCHAR(100),
     email VARCHAR(150) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
-    numero_etudiant VARCHAR(50) NOT NULL UNIQUE,
+    numero_etudiant VARCHAR(50) UNIQUE,
     numero_telephone VARCHAR(20),
     adresse_postale TEXT,
     groupe_tp VARCHAR(10),
@@ -40,22 +30,17 @@ CREATE TABLE Etudiant (
 
 CREATE TABLE Enseignant (
     id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
+    nom VARCHAR(100), 
+    prenom VARCHAR(100),
     email VARCHAR(150) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    -- NOUVEAU : Gestion des validations par l'admin
+    statut_compte ENUM('en_attente', 'valide') DEFAULT 'en_attente',
     etablissement VARCHAR(150),
     numero_telephone VARCHAR(20),
-    adresse_postale TEXT,
-    role ENUM('Responsable de stage', 'Enseignant', 'Responsable de stage', 'Chef de departement', 'Administrateur') NOT NULL
+    adresse_postale TEXT
 );
-
-INSERT INTO Etudiant (email, mot_de_passe) VALUES ('etudiant@univ.fr', 'etudiant123');
-INSERT INTO Enseignant (email, mot_de_passe, role) VALUES 
-('enseignant@univ.fr', 'enseignant123', 'Enseignant'),
-('resp@univ.fr', 'resp123', 'Responsable de stage'),
-('chef@univ.fr', 'chef123', 'Chef de departement'),
-('admin@univ.fr', 'admin123', 'Administrateur');
 
 CREATE TABLE Offre_de_stage (
     id_offre_de_stage INT AUTO_INCREMENT PRIMARY KEY,
@@ -69,9 +54,8 @@ CREATE TABLE Jury_de_soutenance (
 );
 
 -- ==============================================================================
--- 4. CRÉATION DES TABLES AVEC CLÉS ÉTRANGÈRES
+-- CRÉATION DES TABLES LIÉES
 -- ==============================================================================
-
 CREATE TABLE Recherche_de_stage (
     id_recherche INT AUTO_INCREMENT PRIMARY KEY,
     contact_entreprise VARCHAR(150),
@@ -110,60 +94,44 @@ CREATE TABLE Soutenance (
     FOREIGN KEY (id_jury) REFERENCES Jury_de_soutenance(id_jury) ON DELETE CASCADE
 );
 
--- ==============================================================================
--- 5. CRÉATION DES TABLES DE LIAISON
--- ==============================================================================
-
 CREATE TABLE Postuler (
-    id_etudiant INT,
-    id_offre_de_stage INT,
+    id_etudiant INT, id_offre_de_stage INT,
     PRIMARY KEY (id_etudiant, id_offre_de_stage),
     FOREIGN KEY (id_etudiant) REFERENCES Etudiant(id_etudiant) ON DELETE CASCADE,
     FOREIGN KEY (id_offre_de_stage) REFERENCES Offre_de_stage(id_offre_de_stage) ON DELETE CASCADE
 );
 
 CREATE TABLE Prise_en_charge (
-    id_etudiant INT,
-    id_enseignant INT,
-    annee VARCHAR(9),
-    promotion VARCHAR(50),
+    id_etudiant INT, id_enseignant INT, annee VARCHAR(9), promotion VARCHAR(50),
     PRIMARY KEY (id_etudiant, id_enseignant),
     FOREIGN KEY (id_etudiant) REFERENCES Etudiant(id_etudiant) ON DELETE CASCADE,
     FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ON DELETE CASCADE
 );
 
 CREATE TABLE Etre_jury (
-    id_enseignant INT,
-    id_jury INT,
+    id_enseignant INT, id_jury INT,
     PRIMARY KEY (id_enseignant, id_jury),
     FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ON DELETE CASCADE,
     FOREIGN KEY (id_jury) REFERENCES Jury_de_soutenance(id_jury) ON DELETE CASCADE
 );
 
 -- ==============================================================================
--- 6. JEU D'ESSAI : GÉNÉRATION DES COMPTES ET DONNÉES TYPES (Mdp: password123)
+-- JEU D'ESSAI (DONNÉES DE TEST)
 -- ==============================================================================
 
--- Compte Étudiant (id: 1)
-INSERT INTO Etudiant (nom, prenom, email, mot_de_passe, numero_etudiant, groupe_tp, groupe_td, promotion) 
-VALUES ('Dupont', 'Jean', 'etudiant@univ.fr', 'password123', '20245678', 'TP3', 'TD2', 'MMI 2');
+-- Compte Étudiant de base (Auto-validé par nature)
+INSERT INTO Etudiant (nom, prenom, email, mot_de_passe, numero_etudiant) 
+VALUES ('Dupont', 'Jean', 'etudiant@univ.fr', 'etudiant123', '20245678');
 
--- Comptes Enseignants et Staff (ids: 1 à 5)
-INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role) VALUES 
-('Martin', 'Sophie', 'admin@univ.fr', 'password123', 'Administrateur'),
-('Durand', 'Paul', 'chef@univ.fr', 'password123', 'Chef de departement'),
-('Lefevre', 'Marc', 'resp.stage@univ.fr', 'password123', 'Responsable de stage'),
-('Bernard', 'Julie', 'prof@univ.fr', 'password123', 'Enseignant'),
-('Dubois', 'Luc', 'tuteur.entreprise@pro.fr', 'password123', 'Maitre de stage');
+-- LE COMPTE ADMINISTRATEUR UNIQUE (Créé en base, valide d'office)
+INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) 
+VALUES ('Admin', 'Général', 'admin@univ.fr', 'admin123', 'Administrateur', 'valide');
 
--- Création d'un Jury type (id: 1)
-INSERT INTO Jury_de_soutenance (numero_jury) VALUES ('Jury MMI - Groupe A');
+-- Autres comptes de test (Validés pour pouvoir tester la connexion direct)
+INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) VALUES 
+('Martin', 'Sophie', 'prof@univ.fr', 'enseignant123', 'Enseignant', 'valide'),
+('Durand', 'Paul', 'chef@univ.fr', 'chef123', 'Chef de departement', 'valide');
 
--- Affectation de 2 profs au Jury 1 (respect de la consigne)
-INSERT INTO Etre_jury (id_enseignant, id_jury) VALUES 
-(4, 1), -- Julie Bernard (Prof)
-(3, 1); -- Marc Lefevre (Resp. Stage)
-
--- Création d'une soutenance de test pour l'étudiant 1, évalué par le jury 1
-INSERT INTO Soutenance (date_soutenance, horaire, lieu, id_etudiant, id_jury) 
-VALUES ('2026-06-15', '14:00:00', 'Amphithéâtre B104', 1, 1);
+-- Un compte de test "En attente" (Pour tester qu'il ne peut pas se connecter)
+INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) VALUES 
+('Nouveau', 'Prof', 'nouveau@univ.fr', 'prof123', 'Enseignant', 'en_attente');
