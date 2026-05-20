@@ -16,7 +16,7 @@
     <div class="login-container bg-white rounded-2xl shadow-xl relative overflow-hidden w-[768px] max-w-full min-h-[480px]" id="login-container">
         
         <div class="form-container sign-up-container absolute top-0 h-full w-1/2 left-0 opacity-0 z-10 transition-all duration-500">
-            <form action="index.html" class="flex flex-col items-center justify-center h-full px-12 text-center bg-white">
+            <form action="index.php" class="flex flex-col items-center justify-center h-full px-12 text-center bg-white">
                 <h1 class="font-bold text-2xl mb-4 text-slate-800">Créer un compte</h1>
                 <input type="email" placeholder="Email @etudiant.univ.fr" class="w-full bg-slate-50 border border-slate-200 px-4 py-3 my-2 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
                 <input type="password" placeholder="Mot de passe" class="w-full bg-slate-50 border border-slate-200 px-4 py-3 my-2 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
@@ -26,11 +26,11 @@
         </div>
 
         <div class="form-container sign-in-container absolute top-0 h-full w-1/2 left-0 z-20 transition-all duration-500">
-            <form action="index.html" class="flex flex-col items-center justify-center h-full px-12 text-center bg-white">
+            <form action="index.php" class="flex flex-col items-center justify-center h-full px-12 text-center bg-white">
                 <h1 class="font-bold text-2xl mb-4 text-slate-800">Se connecter</h1>
                 <input type="email" placeholder="Email" class="w-full bg-slate-50 border border-slate-200 px-4 py-3 my-2 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
                 <input type="password" placeholder="Mot de passe" class="w-full bg-slate-50 border border-slate-200 px-4 py-3 my-2 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
-                <a href="index.html" class="mt-6 rounded-full bg-gradient-to-r from-brandStart to-brandEnd text-white font-bold py-3 px-10 uppercase tracking-wider hover:scale-105 transition-transform shadow-md">Connexion</a>
+                <a href="index.php" class="mt-6 rounded-full bg-gradient-to-r from-brandStart to-brandEnd text-white font-bold py-3 px-10 uppercase tracking-wider hover:scale-105 transition-transform shadow-md">Connexion</a>
             </form>
         </div>
 
