@@ -327,4 +327,23 @@ document.addEventListener('DOMContentLoaded', () => {
         afficherStatsRecherches();
         appliquerTriRecherches();
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Gestion du menu dynamique "Je suis prof"
+    const accountSelect = document.getElementById('reg-account-type');
+    const roleContainer = document.getElementById('teacher-role-fields');
+
+    if (accountSelect) {
+        accountSelect.addEventListener('change', function() {
+            if (this.value === 'enseignant') {
+                roleContainer.classList.remove('hidden');
+            } else {
+                roleContainer.classList.add('hidden');
+            }
+        });
+    }
+
+    // Si tu avais d'autres fonctions (burger menu, etc.), laisse-les ici...
+    console.log("Scripts chargés avec succès");
+});
 });
