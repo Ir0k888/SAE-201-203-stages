@@ -1,3 +1,11 @@
+<?php
+// LE VIDEUR
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['type_compte'] !== 'etudiant') {
+    header('Location: ../index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
@@ -18,7 +26,7 @@
             <li><a href="suivi-recherches.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Recherches</a></li>
             <li><a href="soutenances.php" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Soutenance</a></li>
             <li><a href="profil.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Profil</a></li>
-            <li><a href="../login.php" class="ml-4 bg-red-50 text-red-600 px-5 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
+            <li><a href="../actions/logout_action.php" class="ml-4 bg-red-50 text-red-600 px-5 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
         </ul>
     </nav>
 
@@ -72,33 +80,7 @@
 
     <footer class="bg-slate-900 pt-16 pb-8 mt-auto border-t-4 border-brandStart">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
-                <div class="md:w-1/3">
-                    <h2 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd mb-4">MMI Stages</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed">Plateforme officielle de gestion des stages du département Métiers du Multimédia et de l'Internet de l'IUT de Meaux. Conçue pour l'excellence.</p>
-                </div>
-                <div class="flex flex-wrap gap-12 md:gap-24">
-                    <div>
-                        <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Navigation</h4>
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a href="../index.php" class="hover:text-brandStart transition-colors">Accueil</a></li>
-                            <li><a href="offres.php" class="hover:text-brandStart transition-colors">Offres de stages</a></li>
-                            <li><a href="suivi-recherches.php" class="hover:text-brandStart transition-colors">Mes recherches</a></li>
-                            <li><a href="soutenances.php" class="hover:text-brandStart transition-colors">Soutenance</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Ressources</h4>
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a href="profil.php" class="hover:text-brandStart transition-colors">Mon Profil</a></li>
-                            <li><a href="#" class="hover:text-brandStart transition-colors">Conventions (ESUP)</a></li>
-                            <li><a href="#" class="hover:text-brandStart transition-colors">Mentions légales</a></li>
-                            <li><a href="#" class="hover:text-brandStart transition-colors">Contact IUT</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="border-t border-slate-800 pt-8 flex justify-center items-center">
                 <p class="text-slate-500 text-sm">© 2026 MMI Meaux. Tous droits réservés.</p>
             </div>
         </div>
