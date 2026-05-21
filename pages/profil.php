@@ -10,7 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 $id_user = $_SESSION['user_id'];
 $type_compte = $_SESSION['type_compte'];
 
-// Re-lecture en BDD pour garantir des données synchrones en temps réel
 if ($type_compte === 'etudiant') {
     $stmt = $pdo->prepare("SELECT * FROM Etudiant WHERE id_etudiant = :id");
     $stmt->execute(['id' => $id_user]);
@@ -19,7 +18,6 @@ if ($type_compte === 'etudiant') {
     $stmt = $pdo->prepare("SELECT * FROM Enseignant WHERE id_enseignant = :id");
     $stmt->execute(['id' => $id_user]);
     $u = $stmt->fetch();
-    // Resynchronisation immédiate du rôle en session au cas où l'Admin vient de valider l'évolution
     $_SESSION['role'] = $u['role'];
 }
 ?>
@@ -62,6 +60,8 @@ if ($type_compte === 'etudiant') {
                         <div class="flex-grow">
                             <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Solliciter un nouveau rôle</label>
                             <select name="nouveau_role" class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm outline-none">
+                                <option value="Enseignant">Enseignant (Classique)</option>
+                                <option value="Membre du jury">Membre du jury</option>
                                 <option value="Responsable de stage">Responsable de stage</option>
                                 <option value="Chef de departement">Chef de département</option>
                             </select>

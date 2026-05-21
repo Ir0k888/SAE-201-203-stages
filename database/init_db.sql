@@ -68,7 +68,7 @@ CREATE TABLE Recherche_de_stage (
 -- JEU D'ESSAI INITIAL
 -- Compte Étudiant de Test
 INSERT INTO Etudiant (nom, prenom, email, mot_de_passe, numero_etudiant, groupe_td, groupe_tp, promotion) 
-VALUES ('Dupont', 'Jean', 'etudiant@univ.fr', 'etudiant123', '20245678', 'B', '3', 'MMI 2');
+VALUES ('Dupont', 'Jean', 'etudiant@etudiant.univ.fr', 'etudiant123', '20245678', 'B', '3', 'MMI 2');
 
 -- L'Unique Administrateur Suprême (pré-validé)
 INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) 
@@ -78,7 +78,3 @@ VALUES ('Admin', 'Général', 'admin@univ.fr', 'admin123', 'Administrateur', 'va
 INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) VALUES 
 ('Martin', 'Sophie', 'prof@univ.fr', 'enseignant123', 'Enseignant', 'valide'),
 ('Durand', 'Paul', 'chef@univ.fr', 'chef123', 'Chef de departement', 'valide');
-
--- Enseignant simulant une attente de validation
-INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) VALUES 
-('Nouveau', 'Prof', 'nouveau@univ.fr', 'prof123', 'Enseignant', 'en_attente');
