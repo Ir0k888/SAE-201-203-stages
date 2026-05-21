@@ -21,16 +21,23 @@ $type_compte = $_SESSION['type_compte'];
         <div class="font-bold text-xl text-slate-800">MMI Stages</div>
         <ul class="flex items-center gap-6 text-sm font-medium">
             <li><a href="index.php" class="text-blue-600">Accueil</a></li>
+            
             <?php if ($role === 'Etudiant'): ?>
                 <li><a href="pages/suivi-recherches.php" class="text-slate-600 hover:text-blue-600">Mes Recherches & Offres</a></li>
                 <li><a href="pages/soutenances.php" class="text-slate-600 hover:text-blue-600">Ma Soutenance</a></li>
+            
             <?php elseif ($role === 'Administrateur'): ?>
                 <li><a href="pages/validation_comptes.php" class="text-slate-600 hover:text-blue-600">Comptes & Rôles</a></li>
+            
+            <?php elseif ($role === 'Responsable de stage'): ?>
                 <li><a href="pages/gestion_stages.php" class="text-slate-600 hover:text-blue-600">Gestion des Stages & Affiliations</a></li>
                 <li><a href="pages/gestion_soutenances.php" class="text-slate-600 hover:text-blue-600">Validation Soutenances</a></li>
-            <?php elseif (in_array($role, ['Enseignant', 'Responsable de stage', 'Membre du jury'])): ?>
+                <li><a href="pages/suivi_etudiants.php" class="text-slate-600 hover:text-blue-600">Mes Étudiants (Tuteur)</a></li>
+            
+            <?php elseif (in_array($role, ['Enseignant', 'Membre du jury'])): ?>
                 <li><a href="pages/suivi_etudiants.php" class="text-slate-600 hover:text-blue-600">Mes Étudiants affiliés</a></li>
             <?php endif; ?>
+            
             <li><a href="pages/profil.php" class="text-slate-600 hover:text-blue-600">Profil</a></li>
             <li><a href="actions/logout_action.php" class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
         </ul>
@@ -41,8 +48,11 @@ $type_compte = $_SESSION['type_compte'];
             <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">Espace <?= htmlspecialchars($role) ?></span>
             <h1 class="text-3xl font-black text-slate-800 mb-4">Ravi de vous revoir, <?= htmlspecialchars($prenom) ?> !</h1>
             <p class="text-slate-500 text-sm mb-6">Plateforme universitaire de centralisation, d'affectation et de validation des soutenances de stages de l'IUT de Meaux.</p>
+            
             <?php if ($role === 'Administrateur'): ?>
-                <a href="pages/gestion_stages.php" class="inline-block bg-slate-800 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-slate-700">Gérer les Stages</a>
+                <a href="pages/validation_comptes.php" class="inline-block bg-slate-800 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-slate-700">Modérer les comptes</a>
+            <?php elseif ($role === 'Responsable de stage'): ?>
+                <a href="pages/gestion_stages.php" class="inline-block bg-amber-600 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-amber-500">Gérer les Stages (Responsable)</a>
             <?php elseif ($role === 'Etudiant'): ?>
                 <a href="pages/suivi-recherches.php" class="inline-block bg-blue-600 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-blue-500">Gérer mes démarches</a>
             <?php else: ?>

@@ -2,8 +2,8 @@
 session_start();
 require_once '../config/database.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Administrateur') {
-    die("Accès réservé à l'administration.");
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Responsable de stage') {
+    die("Accès réservé au Responsable de stage.");
 }
 
 // 1. Demandes de stage initiales (En attente)
@@ -28,7 +28,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Gestion Stages - Admin</title>
+    <title>Gestion Stages - Responsable</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen p-8">

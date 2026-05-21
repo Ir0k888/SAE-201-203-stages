@@ -2,10 +2,11 @@
 session_start();
 require_once '../config/database.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Administrateur') {
-    die("Accès réservé à l'administration.");
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Responsable de stage') {
+    die("Accès réservé au Responsable de stage.");
 }
 
+// Récupérer les soutenances en attente de validation
 $query = "SELECT S.id_soutenance, S.date_soutenance, S.horaire, S.lieu, E.nom AS nom_etu, E.prenom AS prenom_etu, Prof.nom AS nom_prof 
           FROM Soutenance S
           JOIN Etudiant E ON S.id_etudiant = E.id_etudiant
@@ -17,7 +18,7 @@ $soutenances = $pdo->query($query)->fetchAll();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Validation Soutenances - Admin</title>
+    <title>Validation Soutenances - Responsable</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen p-8">
