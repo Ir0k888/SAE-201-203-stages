@@ -1,126 +1,76 @@
 <?php
-// LE VIDEUR GLOBAL
 session_start();
+require_once '../config/database.php';
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../login.php');
     exit();
 }
 
-// On récupère le type de compte pour adapter l'affichage en bas
+$id_user = $_SESSION['user_id'];
 $type_compte = $_SESSION['type_compte'];
+
+// Re-lecture en BDD pour garantir des données synchrones en temps réel
+if ($type_compte === 'etudiant') {
+    $stmt = $pdo->prepare("SELECT * FROM Etudiant WHERE id_etudiant = :id");
+    $stmt->execute(['id' => $id_user]);
+    $u = $stmt->fetch();
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM Enseignant WHERE id_enseignant = :id");
+    $stmt->execute(['id' => $id_user]);
+    $u = $stmt->fetch();
+    // Resynchronisation immédiate du rôle en session au cas où l'Admin vient de valider l'évolution
+    $_SESSION['role'] = $u['role'];
+}
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Profil - Stages MMI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Mon Profil - Configuration</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind.config.js"></script>
-    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
-
-    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white border-b border-slate-200 z-50">
-        <div class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">MMI Stages</div>
-        <ul id="nav-links" class="hidden md:flex gap-8 items-center">
-            <li><a href="../index.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Accueil</a></li>
-            
-            <?php if ($type_compte === 'etudiant'): ?>
-                <li><a href="offres.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Offres</a></li>
-                <li><a href="suivi-recherches.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Recherches</a></li>
-                <li><a href="soutenances.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Soutenance</a></li>
-            <?php elseif ($_SESSION['role'] === 'Administrateur'): ?>
-                <li><a href="validation_comptes.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Validation des comptes</a></li>
-            <?php endif; ?>
-
-            <li><a href="profil.php" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Profil</a></li>
-            <li><a href="../actions/logout_action.php" class="ml-4 bg-red-50 text-red-600 px-5 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
-        </ul>
-    </nav>
-
-    <main class="flex-grow pt-32 pb-16 px-6 max-w-4xl mx-auto w-full">
-        <section class="reveal opacity-0 translate-y-7 transition-all duration-700 ease-out mb-8">
-            <h2 class="text-3xl font-bold text-slate-800">Mon Profil</h2>
-            <p class="text-slate-500 mt-2">Mettez à jour vos informations personnelles.</p>
-        </section>
-        
-        <section class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out bg-white p-10 rounded-2xl border border-slate-100 shadow-sm">
-            <form action="#" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <?php if ($type_compte === 'etudiant'): ?>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-500 mb-1">Numéro étudiant (Matricule)</label>
-                        <input type="text" value="20245678" readonly class="w-full bg-slate-50 text-slate-400 border border-slate-100 px-4 py-3 rounded-xl cursor-not-allowed">
-                    </div>
-                <?php endif; ?>
-
-                <div class="<?= ($type_compte === 'enseignant') ? 'md:col-span-2' : '' ?>">
-                    <label class="block text-sm font-medium text-slate-500 mb-1">Adresse E-mail</label>
-                    <input type="email" value="<?= htmlspecialchars($_SESSION['nom'] ?? 'jean.dupont@etudiant.univ.fr') ?>" readonly class="w-full bg-slate-50 text-slate-400 border border-slate-100 px-4 py-3 rounded-xl cursor-not-allowed">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Nom</label>
-                    <input type="text" value="<?= htmlspecialchars($_SESSION['nom'] ?? '') ?>" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Prénom</label>
-                    <input type="text" value="<?= htmlspecialchars($_SESSION['prenom'] ?? '') ?>" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
-                </div>
-                
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Adresse postale</label>
-                    <input type="text" value="" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
-                </div>
-                
-                <div class="<?= ($type_compte === 'enseignant') ? 'md:col-span-2' : '' ?>">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Numéro de téléphone</label>
-                    <input type="tel" value="" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none transition-shadow">
-                </div>
-
-                <?php if ($type_compte === 'etudiant'): ?>
-                    <div class="grid grid-cols-3 gap-4 md:col-span-2">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Promo</label>
-                            <select class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none">
-                                <option>MMI 1</option>
-                                <option selected>MMI 2</option>
-                                <option>MMI 3</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">TD</label>
-                            <select class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none">
-                                <option>A</option><option selected>B</option><option>C</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">TP</label>
-                            <select class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl focus:ring-2 focus:ring-brandEnd outline-none">
-                                <option>1</option><option>2</option><option selected>3</option><option>4</option>
-                            </select>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-                <div class="md:col-span-2 mt-6">
-                    <button type="submit" class="w-full rounded-xl bg-slate-800 text-white font-bold py-4 px-6 uppercase tracking-wider hover:bg-brandStart transition-colors shadow-sm">
-                        Enregistrer les modifications
-                    </button>
-                </div>
-            </form>
-        </section>
-    </main>
-
-    <footer class="bg-slate-900 pt-16 pb-8 mt-auto border-t-4 border-brandStart">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div class="border-t border-slate-800 pt-8 flex justify-center items-center">
-                <p class="text-slate-500 text-sm">© 2026 MMI Meaux. Tous droits réservés.</p>
+<body class="bg-slate-50 text-slate-800 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto flex flex-col gap-6">
+        <div class="bg-white p-6 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
+            <div>
+                <h1 class="text-xl font-bold">Fiche Profil Utilisateur</h1>
+                <p class="text-xs text-slate-400">Gestion de vos paramètres de contact et demandes d'autorisations.</p>
             </div>
+            <a href="../index.php" class="bg-slate-100 px-4 py-2 rounded-lg font-bold text-xs hover:bg-slate-200">Retour</a>
         </div>
-    </footer>
 
-    <script src="../assets/js/script.js"></script>
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-xs font-bold text-slate-400 block mb-1">Nom</label><input type="text" readonly value="<?=htmlspecialchars($u['nom'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
+                <div><label class="text-xs font-bold text-slate-400 block mb-1">Prénom</label><input type="text" readonly value="<?=htmlspecialchars($u['prenom'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-400 block mb-1">E-mail institutionnel</label><input type="text" readonly value="<?=htmlspecialchars($u['email'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
+
+            <?php if ($type_compte === 'enseignant'): ?>
+                <div class="border-t border-slate-100 pt-6">
+                    <h3 class="font-bold text-sm text-slate-900 mb-2">Statut & Évolution Hiérarchique</h3>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xs text-slate-500">Grade actuel :</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"><?= htmlspecialchars($u['role']) ?></span>
+                        <?php if($u['role_demande']): ?>
+                            <span class="text-xs text-amber-600 font-medium italic">(Demande en cours pour : <?= htmlspecialchars($u['role_demande']) ?>)</span>
+                        <?php endif; ?>
+                    </div>
+
+                    <form action="../actions/demande_role_action.php" method="POST" class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex gap-4 items-end">
+                        <div class="flex-grow">
+                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Solliciter un nouveau rôle</label>
+                            <select name="nouveau_role" class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm outline-none">
+                                <option value="Responsable de stage">Responsable de stage</option>
+                                <option value="Chef de departement">Chef de département</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-4 py-2 rounded-lg hover:bg-slate-700 h-[38px]">Transmettre</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </body>
 </html>
