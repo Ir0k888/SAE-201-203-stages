@@ -49,23 +49,29 @@ if ($type_compte === 'etudiant') {
                 <div class="border-t border-slate-100 pt-6">
                     <h3 class="font-bold text-sm text-slate-900 mb-2">Statut & Évolution Hiérarchique</h3>
                     <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-slate-500">Grade actuel :</span>
+                        <span class="text-xs text-slate-500">Rôle(s) actuel(s) :</span>
                         <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"><?= htmlspecialchars($u['role']) ?></span>
-                        <?php if($u['role_demande']): ?>
-                            <span class="text-xs text-amber-600 font-medium italic">(Demande en cours pour : <?= htmlspecialchars($u['role_demande']) ?>)</span>
+                        <?php if(!empty($u['role_demande'])): ?>
+                            <span class="text-xs text-amber-600 font-medium italic">(Demande en cours : <?= htmlspecialchars($u['role_demande']) ?>)</span>
                         <?php endif; ?>
                     </div>
 
-                    <form action="../actions/demande_role_action.php" method="POST" class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex gap-4 items-end">
-                        <div class="flex-grow">
-                            <label class="block text-xs font-bold text-slate-500 mb-1 uppercase">Solliciter un nouveau rôle</label>
-                            <select name="nouveau_role" class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm outline-none">
-                                <option value="Enseignant">Enseignant (Classique)</option>
-                                <option value="Membre du jury">Membre du jury</option>
-                                <option value="Responsable de stage">Responsable de stage</option>
-                            </select>
+                    <form action="../actions/demande_role_action.php" method="POST" class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-xs font-bold text-slate-500 mb-3 uppercase tracking-wider">Solliciter des responsabilités (cumulables)</label>
+                        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                            <div class="flex gap-6">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="nouveaux_roles[]" value="Membre du jury" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm font-medium text-slate-700">Membre du jury</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="nouveaux_roles[]" value="Responsable de stage" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+                                    <span class="text-sm font-medium text-slate-700">Responsable de stage</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-5 py-2.5 rounded-lg hover:bg-slate-700">Transmettre</button>
                         </div>
-                        <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-4 py-2 rounded-lg hover:bg-slate-700 h-[38px]">Transmettre</button>
+                        <p class="text-[10px] text-slate-400 mt-3 italic">*Laissez les cases vides pour formuler une demande de rétrogradation vers "Enseignant classique".</p>
                     </form>
                 </div>
             <?php endif; ?>

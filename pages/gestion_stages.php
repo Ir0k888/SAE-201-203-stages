@@ -2,7 +2,7 @@
 session_start();
 require_once '../config/database.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Responsable de stage') {
+if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'], 'Responsable de stage')) {
     die("Accès réservé au Responsable de stage.");
 }
 
