@@ -1,91 +1,57 @@
 <?php
-// LE VIDEUR
 session_start();
+require_once '../config/database.php';
+
 if (!isset($_SESSION['user_id']) || $_SESSION['type_compte'] !== 'etudiant') {
     header('Location: ../index.php');
     exit();
 }
+
+$stmt = $pdo->prepare("SELECT * FROM Soutenance WHERE id_etudiant = :id");
+$stmt->execute(['id' => $_SESSION['user_id']]);
+$soutenance = $stmt->fetch();
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Soutenance - Stages MMI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind.config.js"></script>
-    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto flex flex-col gap-6">
+        <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div>
+                <h1 class="text-xl font-bold">Ma Soutenance</h1>
+                <p class="text-xs text-slate-400">Détails de votre convocation et évaluation.</p>
+            </div>
+            <a href="../index.php" class="bg-slate-100 px-4 py-2 rounded-lg font-bold text-xs hover:bg-slate-200">Retour</a>
+        </div>
 
-    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white border-b border-slate-200 z-50">
-        <div class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">MMI Stages</div>
-        <ul id="nav-links" class="hidden md:flex gap-8 items-center">
-            <li><a href="../index.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Accueil</a></li>
-            <li><a href="offres.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Offres</a></li>
-            <li><a href="suivi-recherches.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Recherches</a></li>
-            <li><a href="soutenances.php" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Soutenance</a></li>
-            <li><a href="profil.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Profil</a></li>
-            <li><a href="../actions/logout_action.php" class="ml-4 bg-red-50 text-red-600 px-5 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
-        </ul>
-    </nav>
-
-    <main class="flex-grow pt-32 pb-16 px-6 max-w-5xl mx-auto w-full">
-        <section class="reveal opacity-0 translate-y-7 transition-all duration-700 ease-out mb-8">
-            <h2 class="text-3xl font-bold text-slate-800">Soutenance & Évaluation</h2>
-            <p class="text-slate-500 mt-2">Détails de votre convocation et notes finales.</p>
-        </section>
-        
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out bg-white p-10 rounded-2xl border border-slate-100 shadow-sm">
-                <h3 class="text-xl font-bold text-slate-800 mb-8 border-b border-slate-100 pb-4">Convocation Officielle</h3>
-                
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+            <?php if (!$soutenance): ?>
+                <div class="text-center py-10">
+                    <p class="text-slate-500 font-medium">Votre tuteur n'a pas encore proposé de date pour votre soutenance.</p>
+                </div>
+            <?php elseif ($soutenance['statut_soutenance'] === 'en_attente'): ?>
+                <div class="text-center py-10">
+                    <span class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-bold block w-max mx-auto mb-4">Date en cours de validation</span>
+                    <p class="text-slate-500">Votre tuteur a proposé une date au Chef de département. Elle sera affichée ici dès qu'elle sera validée.</p>
+                </div>
+            <?php else: ?>
+                <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4">Convocation Officielle</h3>
                 <div class="space-y-6">
                     <div>
                         <span class="block text-sm text-slate-400 mb-1 uppercase tracking-wider font-semibold">Date & Heure</span>
-                        <span class="text-lg text-slate-800 font-medium">Mardi 15 Juin 2026 — 14h00</span>
+                        <span class="text-lg text-slate-800 font-medium"><?= date('d/m/Y', strtotime($soutenance['date_soutenance'])) ?> — <?= date('H\hi', strtotime($soutenance['horaire'])) ?></span>
                     </div>
                     <div>
                         <span class="block text-sm text-slate-400 mb-1 uppercase tracking-wider font-semibold">Lieu de passage</span>
-                        <span class="text-lg text-slate-800 font-medium">Amphithéâtre B104</span>
-                    </div>
-                    <div>
-                        <span class="block text-sm text-slate-400 mb-1 uppercase tracking-wider font-semibold">Jury Évaluateur</span>
-                        <span class="text-lg text-slate-800 font-medium">M. Martin & Mme. Durand</span>
+                        <span class="text-lg text-slate-800 font-medium"><?= htmlspecialchars($soutenance['lieu']) ?></span>
                     </div>
                 </div>
-            </div>
-
-            <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-200 ease-out bg-white p-10 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-8 border-b border-slate-100 pb-4">Relevé de notes</h3>
-                    
-                    <div class="flex justify-between items-center py-3">
-                        <span class="text-slate-600 font-medium">Note du rapport écrit</span>
-                        <span class="bg-slate-50 border border-slate-200 text-slate-500 py-1.5 px-3 rounded-lg font-bold text-sm">En attente</span>
-                    </div>
-                    <div class="flex justify-between items-center py-3">
-                        <span class="text-slate-600 font-medium">Note de l'oral</span>
-                        <span class="bg-slate-50 border border-slate-200 text-slate-500 py-1.5 px-3 rounded-lg font-bold text-sm">En attente</span>
-                    </div>
-                </div>
-                
-                <div class="flex justify-between items-center pt-6 mt-6 border-t border-slate-100">
-                    <span class="text-lg font-bold text-slate-800">Moyenne Globale</span>
-                    <span class="text-4xl font-black text-slate-200">-- <span class="text-2xl text-slate-300">/ 20</span></span>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-900 pt-16 pb-8 mt-auto border-t-4 border-brandStart">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div class="border-t border-slate-800 pt-8 flex justify-center items-center">
-                <p class="text-slate-500 text-sm">© 2026 MMI Meaux. Tous droits réservés.</p>
-            </div>
+            <?php endif; ?>
         </div>
-    </footer>
-
-    <script src="../assets/js/script.js"></script>
+    </div>
 </body>
 </html>

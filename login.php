@@ -5,7 +5,6 @@
     <title>Connexion & Inscription - Stages MMI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* FIX DU DESIGN FIDDLER OFFICIEL */
         .login-container { position: relative; overflow: hidden; }
         .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; }
         .sign-in-container { left: 0; width: 50%; z-index: 2; }

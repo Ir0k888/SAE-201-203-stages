@@ -45,7 +45,7 @@ if ($type_compte === 'etudiant') {
             </div>
             <div><label class="text-xs font-bold text-slate-400 block mb-1">E-mail institutionnel</label><input type="text" readonly value="<?=htmlspecialchars($u['email'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
 
-            <?php if ($type_compte === 'enseignant'): ?>
+            <?php if ($type_compte === 'enseignant' && $_SESSION['role'] !== 'Administrateur'): ?>
                 <div class="border-t border-slate-100 pt-6">
                     <h3 class="font-bold text-sm text-slate-900 mb-2">Statut & Évolution Hiérarchique</h3>
                     <div class="flex items-center gap-2 mb-4">
@@ -63,7 +63,6 @@ if ($type_compte === 'etudiant') {
                                 <option value="Enseignant">Enseignant (Classique)</option>
                                 <option value="Membre du jury">Membre du jury</option>
                                 <option value="Responsable de stage">Responsable de stage</option>
-                                <option value="Chef de departement">Chef de département</option>
                             </select>
                         </div>
                         <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-4 py-2 rounded-lg hover:bg-slate-700 h-[38px]">Transmettre</button>
