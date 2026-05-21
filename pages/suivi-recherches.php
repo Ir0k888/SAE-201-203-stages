@@ -1,93 +1,103 @@
 <?php
-// LE VIDEUR
 session_start();
+require_once '../config/database.php';
+
 if (!isset($_SESSION['user_id']) || $_SESSION['type_compte'] !== 'etudiant') {
     header('Location: ../index.php');
     exit();
 }
+
+$id_etudiant = $_SESSION['user_id'];
+
+// Récupérer toutes les recherches de l'étudiant
+$stmt = $pdo->prepare("SELECT * FROM Recherche_de_stage WHERE id_etudiant = :id ORDER BY date_recherche DESC");
+$stmt->execute(['id' => $id_etudiant]);
+$recherches = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mes recherches - Stages MMI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Mes Recherches & Offres - Stages MMI</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind.config.js"></script>
-    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans flex flex-col min-h-screen">
-
-    <nav class="fixed top-0 w-full flex justify-between items-center py-4 px-8 bg-white border-b border-slate-200 z-50">
-        <div class="font-bold text-xl text-transparent bg-clip-text bg-gradient-to-r from-brandStart to-brandEnd">MMI Stages</div>
-        <div class="burger hidden flex-col justify-center gap-1.5 w-7 h-5 cursor-pointer z-[1100] md:hidden" id="burger">
-            <span class="block h-0.5 w-full bg-slate-800 rounded transition-transform duration-300"></span>
-            <span class="block h-0.5 w-full bg-slate-800 rounded transition-opacity duration-300"></span>
-            <span class="block h-0.5 w-full bg-slate-800 rounded transition-transform duration-300"></span>
-        </div>
-        <ul id="nav-links" class="hidden md:flex gap-8 items-center">
-            <li><a href="../index.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Accueil</a></li>
-            <li><a href="offres.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Offres</a></li>
-            <li><a href="suivi-recherches.php" class="nav-link active font-medium text-slate-700 hover:text-brandStart transition-colors">Recherches</a></li>
-            <li><a href="soutenances.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Soutenance</a></li>
-            <li><a href="profil.php" class="nav-link font-medium text-slate-600 hover:text-brandStart transition-colors">Profil</a></li>
-            <li><a href="../actions/logout_action.php" class="ml-4 bg-red-50 text-red-600 px-5 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
-        </ul>
-    </nav>
-
-    <main class="flex-grow pt-32 pb-16 px-6 max-w-5xl mx-auto w-full">
-        <div class="reveal opacity-0 translate-y-7 transition-all duration-700 ease-out mb-8">
-            <h2 class="text-3xl font-bold text-slate-800">Suivi des candidatures</h2>
-            <p class="text-slate-500 mt-2">Gérez vos recherches personnelles et suivez vos statistiques en temps réel.</p>
-        </div>
-
-        <div id="stats-recherches" class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-100 ease-out grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"></div>
-
-        <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-200 ease-out bg-white rounded-2xl shadow-sm border border-slate-100 p-6 mb-8">
-            <h2 class="font-bold text-slate-700 mb-4">Déclarer une nouvelle recherche</h2>
-            <div class="flex flex-wrap gap-4 items-end">
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Entreprise</label>
-                    <input id="input-entreprise" type="text" placeholder="Ex: Ubisoft" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandEnd transition-shadow" />
-                </div>
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Poste visé</label>
-                    <input id="input-poste" type="text" placeholder="Ex: Développeur Web" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandEnd transition-shadow" />
-                </div>
-                <div class="w-full sm:w-auto">
-                    <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">Statut</label>
-                    <select id="input-statut" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandEnd transition-shadow">
-                        <option value="attente">En attente</option>
-                        <option value="entretien">Entretien prévu</option>
-                        <option value="refus">Refusé</option>
-                    </select>
-                </div>
-                <button id="btn-ajouter-recherche" class="w-full sm:w-auto bg-slate-800 hover:bg-brandStart text-white font-bold px-8 py-2.5 rounded-xl cursor-pointer transition-colors shadow-sm">
-                    + Ajouter
-                </button>
+<body class="bg-slate-50 text-slate-800 min-h-screen p-8">
+    <div class="max-w-5xl mx-auto flex flex-col gap-6">
+        <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div>
+                <h1 class="text-xl font-bold">Suivi de mes candidatures</h1>
+                <p class="text-xs text-slate-400">Déclarez vos entretiens et validez vos offres de stage.</p>
             </div>
+            <a href="../index.php" class="bg-slate-100 px-4 py-2 rounded-lg font-bold text-xs hover:bg-slate-200">Retour</a>
         </div>
 
-        <div class="reveal opacity-0 translate-y-7 transition-all duration-700 delay-300 ease-out flex justify-between items-center mb-6">
-            <h3 class="font-bold text-slate-700">Historique de vos démarches</h3>
-            <select id="tri-recherches" class="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brandEnd shadow-sm">
-                <option value="recent">Les plus récentes</option>
-                <option value="alpha">Entreprise (A-Z)</option>
-                <option value="statut">Par statut</option>
-            </select>
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h2 class="font-bold text-slate-700 mb-4">Déclarer une nouvelle démarche</h2>
+            <form action="../actions/etudiant_recherche_action.php" method="POST" class="flex gap-4 items-end">
+                <input type="hidden" name="action" value="ajouter">
+                <div class="flex-1">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Entreprise</label>
+                    <input type="text" name="entreprise" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-400" />
+                </div>
+                <div class="flex-1">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Poste visé</label>
+                    <input type="text" name="poste" required class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-400" />
+                </div>
+                <button type="submit" class="bg-slate-800 text-white font-bold px-6 py-2 rounded-lg hover:bg-slate-700 h-[38px] text-sm">Ajouter</button>
+            </form>
         </div>
 
-        <div id="candidatures-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-    </main>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <?php foreach ($recherches as $r): ?>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg"><?= htmlspecialchars($r['entreprise']) ?></h3>
+                        <p class="text-sm text-slate-500 mb-3"><?= htmlspecialchars($r['poste']) ?></p>
 
-    <footer class="bg-slate-900 pt-16 pb-8 mt-auto border-t-4 border-brandStart">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <div class="border-t border-slate-800 pt-8 flex justify-center items-center">
-                <p class="text-slate-500 text-sm">© 2026 MMI Meaux. Tous droits réservés.</p>
-            </div>
+                        <?php if ($r['statut_candidature'] === 'attente'): ?>
+                            <span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold">Demande en attente (Admin)</span>
+                        
+                        <?php elseif ($r['statut_candidature'] === 'entretien'): ?>
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold mb-3 inline-block">Entretien Prévu !</span>
+                            <form action="../actions/etudiant_recherche_action.php" method="POST" class="mt-2">
+                                <input type="hidden" name="action" value="soumettre_resume">
+                                <input type="hidden" name="id_recherche" value="<?= $r['id_recherche'] ?>">
+                                <textarea name="resume" required placeholder="Comment s'est passé l'entretien ? Avez-vous été retenu ?" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" rows="3"></textarea>
+                                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg text-xs hover:bg-blue-700">Envoyer le compte-rendu à l'Admin</button>
+                            </form>
+                        
+                        <?php elseif ($r['statut_candidature'] === 'attente_validation'): ?>
+                            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold">Résumé envoyé (En attente Admin)</span>
+                        
+                        <?php elseif ($r['statut_candidature'] === 'entretien_effectue'): ?>
+                            <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg mb-2">
+                                <p class="text-emerald-800 font-bold text-sm mb-2">🎉 Offre de stage débloquée !</p>
+                                <p class="text-xs text-emerald-600 mb-3">L'administration a validé votre entretien. Souhaitez-vous accepter ce stage ?</p>
+                                <div class="flex gap-2">
+                                    <form action="../actions/etudiant_recherche_action.php" method="POST" class="flex-1">
+                                        <input type="hidden" name="action" value="accepter_offre">
+                                        <input type="hidden" name="id_recherche" value="<?= $r['id_recherche'] ?>">
+                                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-2 rounded-md text-xs hover:bg-emerald-700">Accepter le stage</button>
+                                    </form>
+                                    <form action="../actions/etudiant_recherche_action.php" method="POST" class="flex-1">
+                                        <input type="hidden" name="action" value="refuser_offre">
+                                        <input type="hidden" name="id_recherche" value="<?= $r['id_recherche'] ?>">
+                                        <button type="submit" class="w-full bg-red-100 text-red-600 font-bold py-2 rounded-md text-xs hover:bg-red-200">Refuser</button>
+                                    </form>
+                                </div>
+                            </div>
+                        
+                        <?php elseif ($r['statut_candidature'] === 'accepte'): ?>
+                            <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold inline-block mb-2">✔️ Stage Officiel Validé !</span>
+                            <p class="text-xs text-slate-500">L'administration va bientôt vous affilier un tuteur de stage.</p>
+                        
+                        <?php elseif ($r['statut_candidature'] === 'refus'): ?>
+                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-bold">Piste refusée / Annulée</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    </footer>
-
-    <script src="../assets/js/script.js"></script>
+    </div>
 </body>
 </html>

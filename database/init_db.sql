@@ -6,7 +6,6 @@ USE sae_stages_mmi;
 
 DROP TABLE IF EXISTS Etre_jury, Prise_en_charge, Postuler, Soutenance, Stage, Recherche_de_stage, Jury_de_soutenance, Offre_de_stage, Enseignant, Etudiant;
 
--- Structure de la table Etudiant
 CREATE TABLE Etudiant (
     id_etudiant INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -21,7 +20,6 @@ CREATE TABLE Etudiant (
     promotion VARCHAR(50) DEFAULT NULL
 ) ENGINE=InnoDB;
 
--- Structure de la table Enseignant
 CREATE TABLE Enseignant (
     id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -36,7 +34,6 @@ CREATE TABLE Enseignant (
     adresse_postale TEXT DEFAULT NULL
 ) ENGINE=InnoDB;
 
--- Structure de la table Offre_de_stage
 CREATE TABLE Offre_de_stage (
     id_offre_de_stage INT AUTO_INCREMENT PRIMARY KEY,
     titre_offre VARCHAR(200) NOT NULL,
@@ -48,24 +45,23 @@ CREATE TABLE Offre_de_stage (
     contact VARCHAR(150) DEFAULT NULL
 ) ENGINE=InnoDB;
 
--- Structure de la table Jury_de_soutenance
 CREATE TABLE Jury_de_soutenance (
     id_jury INT AUTO_INCREMENT PRIMARY KEY,
     numero_jury VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB;
 
--- Table de liaison de recherche autonome pour les étudiants
+-- NOUVEAU : Statuts enrichis et résumé d'entretien
 CREATE TABLE Recherche_de_stage (
     id_recherche INT AUTO_INCREMENT PRIMARY KEY,
     entreprise VARCHAR(150) NOT NULL,
     poste VARCHAR(150) NOT NULL,
-    statut_candidature ENUM('attente', 'entretien', 'refus', 'valide') DEFAULT 'attente',
+    statut_candidature ENUM('attente', 'entretien', 'attente_validation', 'entretien_effectue', 'accepte', 'refus') DEFAULT 'attente',
+    resume_entretien TEXT DEFAULT NULL,
     date_recherche TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_etudiant INT NOT NULL,
     FOREIGN KEY (id_etudiant) REFERENCES Etudiant(id_etudiant) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Table d'affiliation des étudiants aux enseignants (Tuteurs)
 CREATE TABLE Prise_en_charge (
     id_etudiant INT,
     id_enseignant INT,
@@ -76,7 +72,6 @@ CREATE TABLE Prise_en_charge (
     FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Table de planification des soutenances
 CREATE TABLE Soutenance (
     id_soutenance INT AUTO_INCREMENT PRIMARY KEY,
     date_soutenance DATE,
@@ -91,6 +86,6 @@ CREATE TABLE Soutenance (
     FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- LE SEUL COMPTE PAR DÉFAUT : L'Administrateur / Chef de département (Pré-validé)
+-- LE SEUL COMPTE PAR DÉFAUT : L'Admin
 INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) 
 VALUES ('Admin', 'Général', 'admin@univ.fr', 'admin123', 'Administrateur', 'valide');

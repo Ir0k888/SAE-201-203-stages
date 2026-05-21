@@ -22,11 +22,11 @@ $type_compte = $_SESSION['type_compte'];
         <ul class="flex items-center gap-6 text-sm font-medium">
             <li><a href="index.php" class="text-blue-600">Accueil</a></li>
             <?php if ($role === 'Etudiant'): ?>
-                <li><a href="pages/offres.php" class="text-slate-600 hover:text-blue-600">Offres</a></li>
-                <li><a href="pages/suivi-recherches.php" class="text-slate-600 hover:text-blue-600">Mes Recherches</a></li>
+                <li><a href="pages/suivi-recherches.php" class="text-slate-600 hover:text-blue-600">Mes Recherches & Offres</a></li>
                 <li><a href="pages/soutenances.php" class="text-slate-600 hover:text-blue-600">Ma Soutenance</a></li>
             <?php elseif ($role === 'Administrateur'): ?>
                 <li><a href="pages/validation_comptes.php" class="text-slate-600 hover:text-blue-600">Comptes & Rôles</a></li>
+                <li><a href="pages/gestion_stages.php" class="text-slate-600 hover:text-blue-600">Gestion des Stages & Affiliations</a></li>
                 <li><a href="pages/gestion_soutenances.php" class="text-slate-600 hover:text-blue-600">Validation Soutenances</a></li>
             <?php elseif (in_array($role, ['Enseignant', 'Responsable de stage', 'Membre du jury'])): ?>
                 <li><a href="pages/suivi_etudiants.php" class="text-slate-600 hover:text-blue-600">Mes Étudiants affiliés</a></li>
@@ -42,7 +42,7 @@ $type_compte = $_SESSION['type_compte'];
             <h1 class="text-3xl font-black text-slate-800 mb-4">Ravi de vous revoir, <?= htmlspecialchars($prenom) ?> !</h1>
             <p class="text-slate-500 text-sm mb-6">Plateforme universitaire de centralisation, d'affectation et de validation des soutenances de stages de l'IUT de Meaux.</p>
             <?php if ($role === 'Administrateur'): ?>
-                <a href="pages/validation_comptes.php" class="inline-block bg-slate-800 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-slate-700">Modérer l'écosystème</a>
+                <a href="pages/gestion_stages.php" class="inline-block bg-slate-800 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-slate-700">Gérer les Stages</a>
             <?php elseif ($role === 'Etudiant'): ?>
                 <a href="pages/suivi-recherches.php" class="inline-block bg-blue-600 text-white font-bold text-xs uppercase px-6 py-3 rounded-xl shadow-md hover:bg-blue-500">Gérer mes démarches</a>
             <?php else: ?>
