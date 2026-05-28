@@ -9,16 +9,21 @@ if (!isset($_SESSION['user_id'])) {
 
 $id_user = $_SESSION['user_id'];
 $type_compte = $_SESSION['type_compte'];
+$role = $_SESSION['role'];
 
 if ($type_compte === 'etudiant') {
     $stmt = $pdo->prepare("SELECT * FROM Etudiant WHERE id_etudiant = :id");
     $stmt->execute(['id' => $id_user]);
     $u = $stmt->fetch();
+    
+    // Récupération des stages acceptés (Expériences)
+    $stmt_stages = $pdo->prepare("SELECT entreprise, poste FROM Recherche_de_stage WHERE id_etudiant = :id AND statut_candidature = 'accepte'");
+    $stmt_stages->execute(['id' => $id_user]);
+    $experiences = $stmt_stages->fetchAll();
 } else {
     $stmt = $pdo->prepare("SELECT * FROM Enseignant WHERE id_enseignant = :id");
     $stmt->execute(['id' => $id_user]);
     $u = $stmt->fetch();
-    $_SESSION['role'] = $u['role'];
 }
 ?>
 <!DOCTYPE html>
@@ -28,54 +33,83 @@ if ($type_compte === 'etudiant') {
     <title>Mon Profil - Configuration</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen p-8">
-    <div class="max-w-3xl mx-auto flex flex-col gap-6">
-        <div class="bg-white p-6 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
-            <div>
-                <h1 class="text-xl font-bold">Fiche Profil Utilisateur</h1>
-                <p class="text-xs text-slate-400">Gestion de vos paramètres de contact et demandes d'autorisations.</p>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+    
+    <!-- INCORPORATION DE LA NAVBAR -->
+    <?php include '../includes/navbar.php'; ?>
+
+    <main class="flex-grow p-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- COLONNE GAUCHE : IDENTITÉ VISUELLE -->
+            <div class="col-span-1 bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-100 mb-4 bg-slate-200">
+                    <img src="../assets/uploads/<?= htmlspecialchars($u['photo_profil'] ?? 'default.png') ?>" alt="Photo Profil" class="w-full h-full object-cover">
+                </div>
+                <h2 class="text-xl font-bold"><?= htmlspecialchars($u['prenom'] . ' ' . $u['nom']) ?></h2>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase mt-2"><?= htmlspecialchars($role) ?></span>
+                
+                <?php if ($type_compte === 'etudiant' && $u['annee_mmi']): ?>
+                    <p class="text-sm font-semibold text-slate-500 mt-2">Année : MMI <?= htmlspecialchars($u['annee_mmi']) ?></p>
+                <?php endif; ?>
+
+                <p class="text-sm text-slate-500 mt-4 italic">"<?= nl2br(htmlspecialchars($u['bio'] ?? 'Aucune biographie renseignée.')) ?>"</p>
             </div>
-            <a href="../index.php" class="bg-slate-100 px-4 py-2 rounded-lg font-bold text-xs hover:bg-slate-200">Retour</a>
-        </div>
 
-        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-6">
-            <div class="grid grid-cols-2 gap-4">
-                <div><label class="text-xs font-bold text-slate-400 block mb-1">Nom</label><input type="text" readonly value="<?=htmlspecialchars($u['nom'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
-                <div><label class="text-xs font-bold text-slate-400 block mb-1">Prénom</label><input type="text" readonly value="<?=htmlspecialchars($u['prenom'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
-            </div>
-            <div><label class="text-xs font-bold text-slate-400 block mb-1">E-mail institutionnel</label><input type="text" readonly value="<?=htmlspecialchars($u['email'])?>" class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border cursor-not-allowed"></div>
-
-            <?php if ($type_compte === 'enseignant' && $_SESSION['role'] !== 'Administrateur'): ?>
-                <div class="border-t border-slate-100 pt-6">
-                    <h3 class="font-bold text-sm text-slate-900 mb-2">Statut & Évolution Hiérarchique</h3>
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-xs text-slate-500">Rôle(s) actuel(s) :</span>
-                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"><?= htmlspecialchars($u['role']) ?></span>
-                        <?php if(!empty($u['role_demande'])): ?>
-                            <span class="text-xs text-amber-600 font-medium italic">(Demande en cours : <?= htmlspecialchars($u['role_demande']) ?>)</span>
-                        <?php endif; ?>
-                    </div>
-
-                    <form action="../actions/demande_role_action.php" method="POST" class="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                        <label class="block text-xs font-bold text-slate-500 mb-3 uppercase tracking-wider">Solliciter des responsabilités (cumulables)</label>
-                        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                            <div class="flex gap-6">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" name="nouveaux_roles[]" value="Membre du jury" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
-                                    <span class="text-sm font-medium text-slate-700">Membre du jury</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" name="nouveaux_roles[]" value="Responsable de stage" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
-                                    <span class="text-sm font-medium text-slate-700">Responsable de stage</span>
-                                </label>
-                            </div>
-                            <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-5 py-2.5 rounded-lg hover:bg-slate-700">Transmettre</button>
+            <!-- COLONNE DROITE : FORMULAIRE D'ÉDITION & EXPÉRIENCES -->
+            <div class="col-span-2 space-y-6">
+                
+                <!-- Formulaire de modification -->
+                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold mb-4 border-b pb-2 border-slate-100">Modifier mon profil</h3>
+                    <form action="../actions/edit_profil_action.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Changer la photo (Optionnel)</label>
+                            <input type="file" name="photo" accept="image/png, image/jpeg" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-3 italic">*Laissez les cases vides pour formuler une demande de rétrogradation vers "Enseignant classique".</p>
+
+                        <?php if ($type_compte === 'etudiant'): ?>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Année d'étude MMI</label>
+                            <select name="annee_mmi" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm">
+                                <option value="" <?= !$u['annee_mmi'] ? 'selected' : '' ?>>Non spécifiée</option>
+                                <option value="1" <?= $u['annee_mmi'] == '1' ? 'selected' : '' ?>>1ère Année (BUT 1)</option>
+                                <option value="2" <?= $u['annee_mmi'] == '2' ? 'selected' : '' ?>>2ème Année (BUT 2)</option>
+                                <option value="3" <?= $u['annee_mmi'] == '3' ? 'selected' : '' ?>>3ème Année (BUT 3)</option>
+                            </select>
+                        </div>
+                        <?php endif; ?>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">Biographie</label>
+                            <textarea name="bio" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm"><?= htmlspecialchars($u['bio'] ?? '') ?></textarea>
+                        </div>
+
+                        <button type="submit" class="bg-slate-800 text-white font-bold text-xs uppercase px-6 py-3 rounded-lg hover:bg-slate-700">Enregistrer les modifications</button>
                     </form>
                 </div>
-            <?php endif; ?>
+
+                <!-- Section Expériences (Pour les étudiants) -->
+                <?php if ($type_compte === 'etudiant'): ?>
+                    <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold mb-4 border-b pb-2 border-slate-100">Mes expériences de Stage</h3>
+                        <?php if (empty($experiences)): ?>
+                            <p class="text-sm text-slate-500 italic">Aucun stage validé pour le moment.</p>
+                        <?php else: ?>
+                            <ul class="space-y-3">
+                                <?php foreach($experiences as $exp): ?>
+                                    <li class="bg-blue-50 border border-blue-100 p-3 rounded-lg">
+                                        <p class="font-bold text-slate-800"><?= htmlspecialchars($exp['poste']) ?></p>
+                                        <p class="text-sm text-slate-500">chez <?= htmlspecialchars($exp['entreprise']) ?></p>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

@@ -17,7 +17,10 @@ CREATE TABLE Etudiant (
     adresse_postale TEXT DEFAULT NULL,
     groupe_tp VARCHAR(10) DEFAULT NULL,
     groupe_td VARCHAR(10) DEFAULT NULL,
-    promotion VARCHAR(50) DEFAULT NULL
+    promotion VARCHAR(50) DEFAULT NULL,
+    bio TEXT DEFAULT NULL,
+    photo_profil VARCHAR(255) DEFAULT 'default.png',
+    annee_mmi ENUM('1', '2', '3') DEFAULT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE Enseignant (
@@ -26,12 +29,13 @@ CREATE TABLE Enseignant (
     prenom VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     mot_de_passe VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL DEFAULT 'Enseignant',
-    role_demande VARCHAR(50) DEFAULT NULL,
+    role VARCHAR(255) NOT NULL DEFAULT 'Enseignant',
     statut_compte ENUM('en_attente', 'valide') DEFAULT 'en_attente',
     etablissement VARCHAR(150) DEFAULT NULL,
     numero_telephone VARCHAR(20) DEFAULT NULL,
-    adresse_postale TEXT DEFAULT NULL
+    adresse_postale TEXT DEFAULT NULL,
+    bio TEXT DEFAULT NULL,
+    photo_profil VARCHAR(255) DEFAULT 'default.png'
 ) ENGINE=InnoDB;
 
 CREATE TABLE Offre_de_stage (
@@ -50,7 +54,6 @@ CREATE TABLE Jury_de_soutenance (
     numero_jury VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB;
 
--- NOUVEAU : Statuts enrichis et résumé d'entretien
 CREATE TABLE Recherche_de_stage (
     id_recherche INT AUTO_INCREMENT PRIMARY KEY,
     entreprise VARCHAR(150) NOT NULL,

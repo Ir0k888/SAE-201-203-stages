@@ -17,30 +17,8 @@ $type_compte = $_SESSION['type_compte'];
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
-    <nav class="bg-white border-b border-slate-200 py-4 px-8 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-        <div class="font-bold text-xl text-slate-800">MMI Stages</div>
-        <ul class="flex items-center gap-6 text-sm font-medium">
-            <li><a href="index.php" class="text-blue-600">Accueil</a></li>
-            
-            <?php if ($role === 'Etudiant'): ?>
-                <li><a href="pages/suivi-recherches.php" class="text-slate-600 hover:text-blue-600">Mes Recherches & Offres</a></li>
-                <li><a href="pages/soutenances.php" class="text-slate-600 hover:text-blue-600">Ma Soutenance</a></li>
-            
-            <?php elseif ($role === 'Administrateur'): ?>
-                <li><a href="pages/validation_comptes.php" class="text-slate-600 hover:text-blue-600">Comptes & Rôles</a></li>
-            
-            <?php elseif ($type_compte === 'enseignant'): ?>
-                <?php if (str_contains($role, 'Responsable de stage')): ?>
-                    <li><a href="pages/gestion_stages.php" class="text-slate-600 hover:text-blue-600">Gestion des Stages & Affiliations</a></li>
-                    <li><a href="pages/gestion_soutenances.php" class="text-slate-600 hover:text-blue-600">Validation Soutenances</a></li>
-                <?php endif; ?>
-                <li><a href="pages/suivi_etudiants.php" class="text-slate-600 hover:text-blue-600">Mes Étudiants (Tuteur)</a></li>
-            <?php endif; ?>
-            
-            <li><a href="pages/profil.php" class="text-slate-600 hover:text-blue-600">Profil</a></li>
-            <li><a href="actions/logout_action.php" class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-red-100 transition-colors">Déconnexion</a></li>
-        </ul>
-    </nav>
+    
+    <?php include 'includes/navbar.php'; ?>
 
     <main class="flex-grow flex items-center justify-center p-8">
         <div class="max-w-2xl bg-white p-12 rounded-2xl shadow-sm border border-slate-100 text-center">
