@@ -5,6 +5,8 @@
     <title>Connexion & Inscription - Stages MMI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #0f172a; }
         .login-container { position: relative; overflow: hidden; }
         .form-container { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; }
         .sign-in-container { left: 0; width: 50%; z-index: 2; }
@@ -14,7 +16,7 @@
         @keyframes show { 0%, 49.99% { opacity: 0; z-index: 1; } 50%, 100% { opacity: 1; z-index: 5; } }
         .overlay-container { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100; }
         .login-container.right-panel-active .overlay-container { transform: translateX(-100%); }
-        .overlay { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #ffffff; position: relative; left: -100%; height: 100%; width: 200%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
+        .overlay { background: linear-gradient(135deg, #852f30, #FD3956); color: #ffffff; position: relative; left: -100%; height: 100%; width: 200%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
         .login-container.right-panel-active .overlay { transform: translateX(50%); }
         .overlay-panel { position: absolute; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 40px; text-align: center; top: 0; height: 100%; width: 50%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
         .overlay-left { transform: translateX(-20%); }
