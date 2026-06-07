@@ -20,7 +20,8 @@ CREATE TABLE Etudiant (
     promotion VARCHAR(50) DEFAULT NULL,
     bio TEXT DEFAULT NULL,
     photo_profil VARCHAR(255) DEFAULT 'default.png',
-    annee_mmi ENUM('1', '2', '3') DEFAULT NULL
+    annee_mmi ENUM('1', '2', '3') DEFAULT NULL,
+    politique_acceptee TINYINT(1) DEFAULT 0
 ) ENGINE=InnoDB;
 
 CREATE TABLE Enseignant (
@@ -35,7 +36,8 @@ CREATE TABLE Enseignant (
     numero_telephone VARCHAR(20) DEFAULT NULL,
     adresse_postale TEXT DEFAULT NULL,
     bio TEXT DEFAULT NULL,
-    photo_profil VARCHAR(255) DEFAULT 'default.png'
+    photo_profil VARCHAR(255) DEFAULT 'default.png',
+    politique_acceptee TINYINT(1) DEFAULT 0
 ) ENGINE=InnoDB;
 
 CREATE TABLE Offre_de_stage (
@@ -89,6 +91,15 @@ CREATE TABLE Soutenance (
     FOREIGN KEY (id_enseignant) REFERENCES Enseignant(id_enseignant) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- LE SEUL COMPTE PAR DÉFAUT : L'Admin
-INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte) 
-VALUES ('Admin', 'Général', 'admin@univ.fr', 'admin123', 'Administrateur', 'valide');
+-- COMPTE ADMIN PAR DÉFAUT
+INSERT INTO Enseignant (nom, prenom, email, mot_de_passe, role, statut_compte, politique_acceptee) 
+VALUES ('Admin', 'Général', 'admin@univ.fr', 'admin123', 'Administrateur', 'valide', 1);
+
+-- JEU DE TEST : 6 OFFRES DE STAGE (Style Welcome to the Jungle)
+INSERT INTO Offre_de_stage (titre_offre, entreprise, description, remuneration, periode, contact) VALUES 
+('Développeur Front-End Vue.js', 'TechVision', 'Rejoignez notre équipe pour développer des interfaces web innovantes. Maîtrise de HTML, CSS, JS et Vue.js requise. Télétravail partiel possible.', '800€ / mois', 'Avril - Juin', 'rh@techvision.com'),
+('Assistant Webmarketing & SEO', 'DigitalBoost', 'Nous recherchons un profil créatif pour gérer nos campagnes SEO/SEA et animer nos réseaux sociaux. Excellente plume exigée.', '650€ / mois', 'Mai - Juillet', 'contact@digitalboost.fr'),
+('UI/UX Designer', 'CreativeStudio', 'Vous participerez à la refonte de nos applications mobiles. Prototypage sur Figma, tests utilisateurs et design system.', '700€ / mois', 'Avril - Juin', 'jobs@creativestudio.com'),
+('Développeur Back-End PHP/Symfony', 'WebAgency Paris', 'Mission de développement sur un projet e-commerce d''envergure. Connaissance de PHP 8, Symfony et MySQL.', '900€ / mois', 'Mars - Mai', 'recrutement@webagency.paris'),
+('Motion Designer Junior', 'AnimPix', 'Création d''animations 2D/3D pour nos clients institutionnels. After Effects et Premiere Pro sont vos meilleurs amis.', 'Légale', 'Mai - Août', 'hello@animpix.studio'),
+('Chef de Projet Digital', 'InnovGroup', 'Assistance au pilotage de projets web : rédaction de cahier des charges, suivi des plannings, recette et relation client.', '850€ / mois', 'Avril - Septembre', 'talent@innovgroup.com');

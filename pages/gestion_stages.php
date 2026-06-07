@@ -107,5 +107,6 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
             </div>
         </div>
     </main>
+    <?php include ($is_root ? '' : '../') . 'includes/footer.php'; ?>
 </body>
 </html>

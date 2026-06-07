@@ -97,5 +97,6 @@ $profs_valides = $pdo->query("SELECT * FROM Enseignant WHERE statut_compte = 'va
             </div>
         </div>
     </main>
+    <?php include ($is_root ? '' : '../') . 'includes/footer.php'; ?>
 </body>
 </html>

@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = 'Etudiant';
             $_SESSION['nom'] = $user['nom'];
             $_SESSION['prenom'] = $user['prenom'];
+            $_SESSION['politique_acceptee'] = $user['politique_acceptee']; // Ajout
             header('Location: ../index.php');
             exit();
         }
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['nom'] = $user['nom'];
             $_SESSION['prenom'] = $user['prenom'];
+            $_SESSION['politique_acceptee'] = $user['politique_acceptee']; // Ajout
             header('Location: ../index.php');
             exit();
         }

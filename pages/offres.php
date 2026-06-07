@@ -88,5 +88,6 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
             </div>
         </div>
     </main>
+    <?php include ($is_root ? '' : '../') . 'includes/footer.php'; ?>
 </body>
 </html>

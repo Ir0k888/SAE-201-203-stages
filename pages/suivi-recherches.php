@@ -93,5 +93,6 @@ $recherches = $stmt->fetchAll();
             </div>
         </div>
     </main>
+    <?php include ($is_root ? '' : '../') . 'includes/footer.php'; ?>
 </body>
 </html>

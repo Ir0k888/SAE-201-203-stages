@@ -38,5 +38,6 @@ $type_compte = $_SESSION['type_compte'];
             <?php endif; ?>
         </div>
     </main>
+    <?php include ($is_root ? '' : '../') . 'includes/footer.php'; ?>
 </body>
 </html>
