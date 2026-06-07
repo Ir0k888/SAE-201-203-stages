@@ -18,13 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$id]);
         $_SESSION['politique_acceptee'] = 1;
         
-        // Redirection ciblée
-        $target = '../index.php';
-        if ($_SESSION['role'] === 'Etudiant') $target = '../pages/offres.php';
-        elseif ($_SESSION['role'] === 'Administrateur') $target = '../pages/validation_comptes.php';
-        elseif ($_SESSION['type_compte'] === 'enseignant') $target = '../pages/suivi_etudiants.php';
-        
-        header("Location: $target");
+        // Redirection unique
+        header("Location: ../index.php");
         exit();
     } elseif ($action === 'refuser') {
         session_unset();

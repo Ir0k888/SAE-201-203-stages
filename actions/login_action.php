@@ -29,17 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['politique_acceptee'] = $user['politique_acceptee'];
         $_SESSION['photo_profil'] = $user['photo_profil'] ?? 'default.png';
 
-        // Redirection ciblée selon le rôle
-        $target = '../index.php';
-        if ($_SESSION['role'] === 'Etudiant') {
-            $target = '../pages/offres.php';
-        } elseif ($_SESSION['role'] === 'Administrateur') {
-            $target = '../pages/validation_comptes.php';
-        } elseif ($type_compte === 'enseignant') {
-            $target = '../pages/suivi_etudiants.php';
-        }
-        
-        header("Location: $target");
+        // Redirection unique vers l'accueil pour tout le monde
+        header("Location: ../index.php");
         exit();
     }
     die("Identifiants de connexion erronés ou invalides. <a href='../login.php'>Retour</a>");
