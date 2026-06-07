@@ -2,20 +2,16 @@
 session_start();
 require_once '../config/database.php';
 
-if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'], 'Responsable de stage')) {
+// VERROU STRICT : Responsable de stage uniquement
+if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'] ?? '', 'Responsable de stage')) {
     die("Accès réservé au Responsable de stage.");
 }
 
 $role = $_SESSION['role'];
 $type_compte = $_SESSION['type_compte'];
 
-// 1. Demandes de stage initiales (En attente)
 $req_attente = $pdo->query("SELECT R.*, E.nom, E.prenom FROM Recherche_de_stage R JOIN Etudiant E ON R.id_etudiant = E.id_etudiant WHERE R.statut_candidature = 'attente'")->fetchAll();
-
-// 2. Résumés d'entretiens à lire
 $req_resumes = $pdo->query("SELECT R.*, E.nom, E.prenom FROM Recherche_de_stage R JOIN Etudiant E ON R.id_etudiant = E.id_etudiant WHERE R.statut_candidature = 'attente_validation'")->fetchAll();
-
-// 3. Étudiants avec Stage Accepté MAIS sans tuteur affilié
 $req_sans_tuteur = $pdo->query("
     SELECT R.entreprise, R.poste, E.id_etudiant, E.nom, E.prenom 
     FROM Recherche_de_stage R 
@@ -23,8 +19,6 @@ $req_sans_tuteur = $pdo->query("
     WHERE R.statut_candidature = 'accepte' 
     AND E.id_etudiant NOT IN (SELECT id_etudiant FROM Prise_en_charge)
 ")->fetchAll();
-
-// Liste de tous les profs valides pour l'affiliation
 $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE statut_compte = 'valide'")->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -49,6 +43,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-8">
+                    <!-- 1. Demandes initiales -->
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                         <div class="bg-slate-900 px-4 py-3"><h2 class="text-white font-bold text-sm">1. Nouvelles candidatures déclarées</h2></div>
                         <div class="p-4 space-y-3">
@@ -65,6 +60,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
                         </div>
                     </div>
 
+                    <!-- 2. Lecture des résumés d'entretiens -->
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                         <div class="bg-blue-900 px-4 py-3"><h2 class="text-white font-bold text-sm">2. Comptes-rendus d'entretiens à lire</h2></div>
                         <div class="p-4 space-y-3">
@@ -83,6 +79,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
                     </div>
                 </div>
 
+                <!-- 3. Affiliations -->
                 <div>
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden sticky top-24">
                         <div class="bg-emerald-900 px-4 py-3"><h2 class="text-white font-bold text-sm">3. Affiliation des Tuteurs (Stages validés)</h2></div>

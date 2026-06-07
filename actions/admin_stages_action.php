@@ -2,11 +2,11 @@
 session_start();
 require_once '../config/database.php';
 
-if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'], 'Responsable de stage')) {
+// VERROU STRICT : Responsable de stage uniquement
+if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'] ?? '', 'Responsable de stage')) {
     die("Action non autorisée.");
 }
 
-// Gestion GET (Liens directs)
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $id_recherche = $_GET['id'] ?? null;
     $action = $_GET['action'] ?? null;
@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-// Gestion POST (Formulaires d'affiliation)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
     
