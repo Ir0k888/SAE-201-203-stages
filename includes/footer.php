@@ -29,7 +29,7 @@ $root_path = $is_root ? '' : '../';
 <?php endif; ?>
 
 <!-- LE FOOTER DESIGN -->
-<footer class="bg-[#1e2229] text-white pt-16 pb-8 border-t border-slate-800 mt-auto">
+<footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800 mt-auto">
     <div class="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 text-sm">
         
         <div>
