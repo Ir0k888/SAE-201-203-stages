@@ -95,7 +95,7 @@
                     <button class="border border-white/50 bg-white/10 backdrop-blur-sm rounded-full py-2.5 px-8 uppercase font-bold text-xs hover:bg-white hover:text-slate-900 transition-colors" id="signIn">Se connecter</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <h1 class="font-black text-3xl mb-2">Nouveau ici ?</h1>
+                    <h1 class="font-black text-3xl mb-2">Nouveau compte ?</h1>
                     <p class="text-sm text-slate-200 mb-6">Créez un compte pour rejoindre la plateforme de l'IUT.</p>
                     <button class="border border-white/50 bg-white/10 backdrop-blur-sm rounded-full py-2.5 px-8 uppercase font-bold text-xs hover:bg-white hover:text-slate-900 transition-colors" id="signUp">S'inscrire</button>
                 </div>
