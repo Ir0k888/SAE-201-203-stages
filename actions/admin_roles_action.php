@@ -7,11 +7,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Administrateur') {
 }
 
 $id_enseignant = $_POST['id_enseignant'] ?? null;
-$roles = isset($_POST['roles']) ? $_POST['roles'] : [];
+$roles_coches = isset($_POST['roles']) ? $_POST['roles'] : [];
 
 if ($id_enseignant) {
-    // Si aucune case n'est cochée, on le remet "Enseignant" classique. Sinon on assemble les rôles.
-    $role_string = empty($roles) ? 'Enseignant' : implode(', ', $roles);
+    if (!in_array('Enseignant', $roles_coches)) {
+        array_unshift($roles_coches, 'Enseignant');
+    }
+    
+    $role_string = implode(', ', $roles_coches);
     
     $stmt = $pdo->prepare("UPDATE Enseignant SET role = :role WHERE id_enseignant = :id");
     $stmt->execute(['role' => $role_string, 'id' => $id_enseignant]);

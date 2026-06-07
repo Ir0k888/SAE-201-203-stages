@@ -50,7 +50,13 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
                             <?php if(empty($req_attente)): ?><p class="text-xs text-slate-400 italic">Rien à valider.</p><?php endif; ?>
                             <?php foreach($req_attente as $r): ?>
                                 <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-sm flex justify-between items-center">
-                                    <div><span class="font-bold"><?= htmlspecialchars($r['prenom'].' '.$r['nom']) ?></span><br><span class="text-slate-500"><?= htmlspecialchars($r['entreprise']) ?> - <?= htmlspecialchars($r['poste']) ?></span></div>
+                                    <div>
+                                         <span class="font-bold"><?= htmlspecialchars($r['prenom'].' '.$r['nom']) ?></span>
+                                        <?php if($r['piece_jointe']): ?>
+                                            <a href="../assets/uploads/cv/<?= htmlspecialchars($r['piece_jointe']) ?>" target="_blank" class="text-rose-600 font-bold text-xs ml-2 hover:underline">📄 Voir CV</a>
+                                        <?php endif; ?>
+                                        <br><span class="text-slate-500"><?= htmlspecialchars($r['entreprise']) ?> - <?= htmlspecialchars($r['poste']) ?></span>
+                                    </div>
                                     <div class="flex gap-2">
                                         <a href="../actions/admin_stages_action.php?id=<?=$r['id_recherche']?>&action=valider_attente" class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold hover:bg-blue-200">OK (Entretien)</a>
                                         <a href="../actions/admin_stages_action.php?id=<?=$r['id_recherche']?>&action=refuser" class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-bold">Refuser</a>

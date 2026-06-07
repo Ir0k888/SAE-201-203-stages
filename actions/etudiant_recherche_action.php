@@ -13,13 +13,22 @@ if ($action === 'postuler_offre') {
     $entreprise = trim($_POST['entreprise'] ?? '');
     $poste = trim($_POST['poste'] ?? '');
     
+    // Upload de la pièce jointe
+    $pj_nom = null;
+    if (isset($_FILES['piece_jointe']) && $_FILES['piece_jointe']['error'] === UPLOAD_ERR_OK) {
+        if (!file_exists('../assets/uploads/cv')) mkdir('../assets/uploads/cv', 0777, true);
+        $tmp_name = $_FILES['piece_jointe']['tmp_name'];
+        $extension = pathinfo($_FILES['piece_jointe']['name'], PATHINFO_EXTENSION);
+        $pj_nom = 'CV_' . $id_etudiant . '_' . time() . '.' . $extension;
+        move_uploaded_file($tmp_name, '../assets/uploads/cv/' . $pj_nom);
+    }
+
     if ($entreprise && $poste) {
-        // Vérifie si l'étudiant a déjà postulé à cette offre exacte pour éviter les doublons
         $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM Recherche_de_stage WHERE id_etudiant = ? AND entreprise = ? AND poste = ?");
         $stmt_check->execute([$id_etudiant, $entreprise, $poste]);
         if ($stmt_check->fetchColumn() == 0) {
-            $stmt = $pdo->prepare("INSERT INTO Recherche_de_stage (entreprise, poste, id_etudiant) VALUES (?, ?, ?)");
-            $stmt->execute([$entreprise, $poste, $id_etudiant]);
+            $stmt = $pdo->prepare("INSERT INTO Recherche_de_stage (entreprise, poste, id_etudiant, piece_jointe) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$entreprise, $poste, $id_etudiant, $pj_nom]);
         }
     }
     header('Location: ../pages/suivi-recherches.php');

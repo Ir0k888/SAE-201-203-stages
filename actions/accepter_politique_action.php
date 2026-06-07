@@ -17,10 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("UPDATE $table SET politique_acceptee = 1 WHERE $col_id = ?");
         $stmt->execute([$id]);
         $_SESSION['politique_acceptee'] = 1;
-        header('Location: ../index.php');
+        
+        // Redirection ciblée
+        $target = '../index.php';
+        if ($_SESSION['role'] === 'Etudiant') $target = '../pages/offres.php';
+        elseif ($_SESSION['role'] === 'Administrateur') $target = '../pages/validation_comptes.php';
+        elseif ($_SESSION['type_compte'] === 'enseignant') $target = '../pages/suivi_etudiants.php';
+        
+        header("Location: $target");
         exit();
     } elseif ($action === 'refuser') {
-        // S'il refuse, on le déconnecte
         session_unset();
         session_destroy();
         header('Location: ../login.php?msg=refus_politique');
