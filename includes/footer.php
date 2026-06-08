@@ -28,7 +28,6 @@ $root_path = $is_root ? '' : '../';
 </div>
 <?php endif; ?>
 
-<!-- LE FOOTER DESIGN -->
 <footer class="bg-slate-900 text-white pt-16 pb-8 border-t border-slate-800 mt-auto">
     <div class="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 text-sm">
         
@@ -36,10 +35,9 @@ $root_path = $is_root ? '' : '../';
             <h3 class="font-bold text-lg mb-6">Navigation</h3>
             <div class="w-8 h-0.5 bg-rose-600 mb-6"></div>
             <ul class="space-y-4 text-slate-400">
-                <li><a href="#" class="hover:text-rose-500 transition-colors">À propos de l'IUT</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Nos Services</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Politique de Confidentialité</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Programme d'affiliation</a></li>
+                <li><a href="<?= $root_path ?>index.php" class="hover:text-rose-500 transition-colors">Accueil</a></li>
+                <li><a href="<?= $root_path ?>pages/offres.php" class="hover:text-rose-500 transition-colors">Offres de stage</a></li>
+                <li><a href="<?= $root_path ?>pages/profil.php" class="hover:text-rose-500 transition-colors">Mon Profil</a></li>
             </ul>
         </div>
 
@@ -47,10 +45,9 @@ $root_path = $is_root ? '' : '../';
             <h3 class="font-bold text-lg mb-6">Aide & Support</h3>
             <div class="w-8 h-0.5 bg-rose-600 mb-6"></div>
             <ul class="space-y-4 text-slate-400">
-                <li><a href="#" class="hover:text-rose-500 transition-colors">FAQ Étudiants</a></li>
+                <li><a href="<?= $root_path ?>pages/faq.php" class="hover:text-rose-500 transition-colors">FAQ & Aide</a></li>
                 <li><a href="#" class="hover:text-rose-500 transition-colors">Contact Secrétariat</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Règlement des stages</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Statut des conventions</a></li>
+                <li><a href="#" class="hover:text-rose-500 transition-colors">Mentions légales</a></li>
             </ul>
         </div>
 
@@ -60,7 +57,6 @@ $root_path = $is_root ? '' : '../';
             <ul class="space-y-4 text-slate-400">
                 <li><a href="#" class="hover:text-rose-500 transition-colors">Moodle MMI</a></li>
                 <li><a href="#" class="hover:text-rose-500 transition-colors">Intranet Université</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Ressources Pédagogiques</a></li>
                 <li><a href="#" class="hover:text-rose-500 transition-colors">Planning Général</a></li>
             </ul>
         </div>
@@ -69,14 +65,14 @@ $root_path = $is_root ? '' : '../';
             <h3 class="font-bold text-lg mb-6">Suivez-nous</h3>
             <div class="w-8 h-0.5 bg-rose-600 mb-6"></div>
             <div class="flex gap-4">
-                <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">f</a>
-                <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">X</a>
-                <a href="#" class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">in</a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">f</a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">X</a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-rose-600 transition-colors text-white font-bold">in</a>
             </div>
         </div>
 
     </div>
-    <div class="max-w-6xl mx-auto px-8 mt-12 pt-8 border-t border-slate-700 text-center text-slate-500 text-xs">
+    <div class="max-w-6xl mx-auto px-8 mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
         &copy; <?= date('Y') ?> Département MMI Meaux. Tous droits réservés.
     </div>
 </footer>
