@@ -14,19 +14,10 @@ if ($action === 'ajouter') {
     $entreprise = trim($_POST['entreprise'] ?? '');
     $description = trim($_POST['description'] ?? '');
 
-    $banniere_nom = null;
-    if (isset($_FILES['banniere']) && $_FILES['banniere']['error'] === UPLOAD_ERR_OK) {
-        if (!file_exists('../assets/uploads/bannieres')) mkdir('../assets/uploads/bannieres', 0777, true);
-        $tmp_name = $_FILES['banniere']['tmp_name'];
-        $extension = pathinfo($_FILES['banniere']['name'], PATHINFO_EXTENSION);
-        $banniere_nom = 'ban_' . time() . '.' . $extension;
-        move_uploaded_file($tmp_name, '../assets/uploads/bannieres/' . $banniere_nom);
-    }
-
+    // Si les champs sont remplis, on insère (sans l'image_banniere qui causait l'erreur)
     if ($titre && $entreprise && $description) {
-        // Retrait de niveau_requis
-        $stmt = $pdo->prepare("INSERT INTO Offre_de_stage (titre_offre, entreprise, description, image_banniere) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$titre, $entreprise, $description, $banniere_nom]);
+        $stmt = $pdo->prepare("INSERT INTO Offre_de_stage (titre_offre, entreprise, description) VALUES (?, ?, ?)");
+        $stmt->execute([$titre, $entreprise, $description]);
     }
 } elseif ($action === 'supprimer') {
     $id_offre = $_POST['id_offre'] ?? null;
@@ -36,6 +27,7 @@ if ($action === 'ajouter') {
     }
 }
 
+// Retour à la page des offres
 header('Location: ../pages/offres.php');
 exit();
 ?>
