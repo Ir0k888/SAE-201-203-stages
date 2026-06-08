@@ -20,7 +20,6 @@ $root_path = $is_root ? '' : '../';
             <div class="w-8 h-0.5 bg-rose-600 mb-6"></div>
             <ul class="space-y-4 text-slate-400">
                 <li><a href="<?= $root_path ?>pages/faq.php" class="hover:text-rose-500 transition-colors">FAQ & Aide</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Contact Secrétariat</a></li>
                 <!-- LIEN MENTIONS LEGALES QUI OUVRE LA MODALE -->
                 <li><button type="button" onclick="document.getElementById('modal-mentions').style.display='flex'" class="hover:text-rose-500 transition-colors text-left">Mentions légales</button></li>
             </ul>
@@ -30,9 +29,9 @@ $root_path = $is_root ? '' : '../';
             <h3 class="font-bold text-lg mb-6">Accès Rapides</h3>
             <div class="w-8 h-0.5 bg-rose-600 mb-6"></div>
             <ul class="space-y-4 text-slate-400">
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Moodle MMI</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Intranet Université</a></li>
-                <li><a href="#" class="hover:text-rose-500 transition-colors">Planning Général</a></li>
+                <li><a href="https://elearning.univ-eiffel.fr" target="_blank" class="hover:text-rose-500 transition-colors">Moodle MMI</a></li>
+                <li><a href="https://intranet-edu.univ-eiffel.fr/accueil" target="_blank" class="hover:text-rose-500 transition-colors">Intranet Université</a></li>
+                <li><a href="https://edt-consult.univ-eiffel.fr/direct/" target="_blank" class="hover:text-rose-500 transition-colors">Planning Général</a></li>
             </ul>
         </div>
 
