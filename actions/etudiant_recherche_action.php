@@ -46,8 +46,22 @@ if ($action === 'postuler_offre') {
 
 } elseif ($action === 'accepter_offre') {
     $id_recherche = $_POST['id_recherche'];
+    
+    // 1. On récupère le poste et l'entreprise liés à cette candidature
+    $stmt_info = $pdo->prepare("SELECT poste, entreprise FROM Recherche_de_stage WHERE id_recherche = ? AND id_etudiant = ?");
+    $stmt_info->execute([$id_recherche, $id_etudiant]);
+    $recherche = $stmt_info->fetch();
+
+    // 2. On met à jour le statut de la candidature pour valider le stage
     $stmt = $pdo->prepare("UPDATE Recherche_de_stage SET statut_candidature = 'accepte' WHERE id_recherche = ? AND id_etudiant = ?");
     $stmt->execute([$id_recherche, $id_etudiant]);
+
+    // 3. Suppression automatique de l'offre du catalogue global
+    if ($recherche) {
+        $stmt_del = $pdo->prepare("DELETE FROM Offre_de_stage WHERE titre_offre = ? AND entreprise = ?");
+        $stmt_del->execute([$recherche['poste'], $recherche['entreprise']]);
+    }
+    
     header('Location: ../pages/suivi-recherches.php');
     exit();
 
