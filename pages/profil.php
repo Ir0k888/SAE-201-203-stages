@@ -33,9 +33,9 @@ $u = $stmt->fetch();
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <!-- COLONNE GAUCHE : FORMULAIRE (2/3 de l'espace) -->
-            <div class="lg:col-span-2 bg-white p-10 rounded-2xl border-2 border-slate-200 shadow-sm">
-                <h1 class="text-3xl font-black tracking-tight mb-2">Mon profil</h1>
-                <p class="text-sm font-semibold text-slate-900 mb-8">Mettez à jour vos informations personnelles</p>
+            <div class="lg:col-span-2 bg-white p-8 rounded-2xl border-2 border-slate-200 shadow-sm">
+                <h1 class="text-3xl font-black mb-1">Mon profil</h1>
+                <p class="text-slate-500 mb-8">Mettez à jour vos informations personnelles</p>
 
                 <form action="../actions/edit_profil_action.php" method="POST" enctype="multipart/form-data" class="space-y-6">
                     
@@ -98,14 +98,14 @@ $u = $stmt->fetch();
             </div>
 
             <!-- COLONNE DROITE : VISUALISATION (1/3 de l'espace) -->
-            <div class="lg:col-span-1 bg-white p-10 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div class="bg-white p-8 rounded-2xl border-2 border-slate-200 shadow-sm self-start">
                 
                 <div class="w-32 h-32 rounded-full overflow-hidden bg-slate-200 mb-6">
-                    <img src="../assets/uploads/<?= htmlspecialchars($u['photo_profil'] ?? 'default.png') ?>" alt="Photo Profil" class="w-full h-full object-cover">
+                    <img src="../assets/uploads/<?= htmlspecialchars($u['photo_profil'] ?? 'default.png') ?>" alt="Photo Profil" class="w-32 h-32 rounded-full mx-auto mb-4">
                 </div>
                 
-                <h2 class="text-xl font-bold text-slate-900 mb-2"><?= htmlspecialchars($u['nom'] . ' ' . $u['prenom']) ?></h2>
-                <p class="text-sm text-slate-500 italic mb-12">"<?= htmlspecialchars($u['bio'] ?? 'Aucune biographie renseignée.') ?>"</p>
+                <h2 class="text-xl font-black text-center"><?= $_SESSION['nom'] ?> <?= $_SESSION['prenom'] ?></h2>
+                <p class="text-sm text-slate-400 text-center mt-4">"<?= htmlspecialchars($u['bio'] ?? 'Aucune biographie renseignée.') ?>"</p>
 
                 <div class="w-full border-t border-slate-100 pt-8 mt-auto">
                     <h3 class="font-bold text-slate-900 mb-2">Notification</h3>
