@@ -33,7 +33,7 @@ $u = $stmt->fetch();
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             <!-- COLONNE GAUCHE : FORMULAIRE (2/3 de l'espace) -->
-            <div class="lg:col-span-2 bg-white p-10 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="lg:col-span-2 bg-white p-10 rounded-2xl border-2 border-slate-200 shadow-sm">
                 <h1 class="text-3xl font-black tracking-tight mb-2">Mon profil</h1>
                 <p class="text-sm font-semibold text-slate-900 mb-8">Mettez à jour vos informations personnelles</p>
 
@@ -48,18 +48,18 @@ $u = $stmt->fetch();
                         <?php endif; ?>
                         <div class="<?= $type_compte !== 'etudiant' ? 'col-span-2' : '' ?>">
                             <label class="block text-xs font-bold text-slate-900 mb-2">Adresse E-mail universitaire</label>
-                            <input type="email" value="<?= htmlspecialchars($u['email']) ?>" readonly class="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
+                            <input type="email" value="<?= htmlspecialchars($u['email']) ?>" readonly class="w-full bg-slate-50 border-2 border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs font-bold text-slate-900 mb-2">Nom</label>
-                            <input type="text" value="<?= htmlspecialchars($u['nom']) ?>" readonly class="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
+                            <input type="text" value="<?= htmlspecialchars($u['nom']) ?>" readonly class="w-full bg-slate-50 border-2 border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-900 mb-2">Prénom</label>
-                            <input type="text" value="<?= htmlspecialchars($u['prenom']) ?>" readonly class="w-full bg-slate-50 border border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
+                            <input type="text" value="<?= htmlspecialchars($u['prenom']) ?>" readonly class="w-full bg-slate-50 border-2 border-slate-200 rounded-md px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed">
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@ $u = $stmt->fetch();
             </div>
 
             <!-- COLONNE DROITE : VISUALISATION (1/3 de l'espace) -->
-            <div class="lg:col-span-1 bg-white p-10 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div class="lg:col-span-1 bg-white p-10 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center text-center">
                 
                 <div class="w-32 h-32 rounded-full overflow-hidden bg-slate-200 mb-6">
                     <img src="../assets/uploads/<?= htmlspecialchars($u['photo_profil'] ?? 'default.png') ?>" alt="Photo Profil" class="w-full h-full object-cover">

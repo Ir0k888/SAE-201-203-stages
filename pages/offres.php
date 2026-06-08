@@ -39,23 +39,25 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
             </div>
 
             <?php if ($type_compte === 'enseignant'): ?>
-                <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                <!-- BORDURE EPAISSIE ICI -->
+                <div class="bg-white p-8 rounded-xl border-2 border-slate-300 shadow-sm">
                     <h2 class="font-black text-xl mb-6 text-slate-900">Publier une nouvelle offre</h2>
                     <form action="../actions/prof_offres_action.php" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6 font-medium">
                         <input type="hidden" name="action" value="ajouter">
                         
                         <div>
                             <label class="block text-xs font-bold text-slate-500 mb-2">Titre du poste</label>
-                            <input type="text" name="titre_offre" required class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400">
+                            <!-- INPUT BORDURE EPAISSIE -->
+                            <input type="text" name="titre_offre" required class="w-full bg-white border-2 border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 mb-2">Entreprise</label>
-                            <input type="text" name="entreprise" required class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400">
+                            <input type="text" name="entreprise" required class="w-full bg-white border-2 border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400">
                         </div>
                         
                         <div class="md:col-span-2">
                             <label class="block text-xs font-bold text-slate-500 mb-2">Description</label>
-                            <textarea name="description" required rows="2" class="w-full bg-white border border-slate-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400"></textarea>
+                            <textarea name="description" required rows="2" class="w-full bg-white border-2 border-slate-300 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-rose-400"></textarea>
                         </div>
                         
                         <div class="md:col-span-2 text-right border-t border-slate-100 pt-4">
@@ -67,10 +69,11 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <?php if (empty($offres)): ?>
-                    <p class="text-sm font-bold text-slate-500 col-span-full text-center py-10 bg-white rounded-xl border border-slate-200">Aucune offre disponible.</p>
+                    <p class="text-sm font-bold text-slate-500 col-span-full text-center py-10 bg-white rounded-xl border-2 border-slate-300">Aucune offre disponible.</p>
                 <?php else: foreach($offres as $o): ?>
                     
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col relative overflow-hidden group">
+                    <!-- CARTE BORDURE EPAISSIE ICI -->
+                    <div class="bg-white rounded-xl border-2 border-slate-300 shadow-sm hover:shadow-lg transition-all flex flex-col relative overflow-hidden group">
                         
                         <?php if ($type_compte === 'enseignant'): ?>
                             <form action="../actions/prof_offres_action.php" method="POST" class="absolute top-4 right-4 z-20">
@@ -80,10 +83,9 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
                             </form>
                         <?php endif; ?>
 
-                        <!-- BANNIÈRE BLEUE MARINE UNIE (Plus d'erreur PHP) -->
                         <div class="h-32 bg-slate-900 relative z-0"></div>
                         
-                        <div class="absolute top-20 left-6 w-20 h-20 bg-white rounded-xl shadow-md border-2 border-slate-100 flex items-center justify-center font-black text-4xl text-slate-900 z-10">
+                        <div class="absolute top-20 left-6 w-20 h-20 bg-white rounded-xl shadow-md border-2 border-slate-200 flex items-center justify-center font-black text-4xl text-slate-900 z-10">
                             <?= strtoupper(substr($o['entreprise'], 0, 1)) ?>
                         </div>
 
@@ -96,14 +98,14 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
                             
                             <?php if ($type_compte === 'etudiant'): ?>
                                 <div class="flex gap-4 mt-auto">
-                                    <button type="button" onclick="openModal('modal-postuler-<?= $o['id_offre_de_stage'] ?>')" class="flex-1 bg-white border border-slate-300 text-slate-900 font-bold py-3 rounded-lg text-sm hover:bg-slate-50 transition-colors">Postuler</button>
+                                    <button type="button" onclick="openModal('modal-postuler-<?= $o['id_offre_de_stage'] ?>')" class="flex-1 bg-white border-2 border-slate-300 text-slate-900 font-bold py-3 rounded-lg text-sm hover:bg-slate-50 transition-colors">Postuler</button>
                                     <button type="button" onclick="openModal('modal-info-<?= $o['id_offre_de_stage'] ?>')" class="flex-1 bg-slate-900 text-white font-bold py-3 rounded-lg text-sm hover:bg-slate-800 transition-colors shadow-sm">En savoir plus</button>
                                 </div>
                             <?php endif; ?>
                         </div>
                     </div>
 
-                    <!-- MODALES REPARÉES AVEC JS PUR -->
+                    <!-- Modales (inchangées) -->
                     <div id="modal-info-<?= $o['id_offre_de_stage'] ?>" style="display: none;" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 items-center justify-center p-4">
                         <div class="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-10 relative shadow-2xl">
                             <button type="button" onclick="closeModal('modal-info-<?= $o['id_offre_de_stage'] ?>')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 font-black text-3xl">&times;</button>
@@ -128,7 +130,7 @@ $offres = $pdo->query("SELECT * FROM Offre_de_stage ORDER BY id_offre_de_stage D
                                 <input type="hidden" name="poste" value="<?= htmlspecialchars($o['titre_offre']) ?>">
                                 <div class="mb-8">
                                     <label class="block text-sm font-bold text-slate-900 mb-3">Joindre votre CV (PDF)</label>
-                                    <input type="file" name="piece_jointe" accept=".pdf,.doc,.docx" required class="w-full text-sm font-medium text-slate-500 border border-slate-300 rounded-lg file:mr-4 file:py-2.5 file:px-4 file:border-0 file:bg-slate-100 file:text-slate-700">
+                                    <input type="file" name="piece_jointe" accept=".pdf,.doc,.docx" required class="w-full text-sm font-medium text-slate-500 border-2 border-slate-300 rounded-lg file:mr-4 file:py-2.5 file:px-4 file:border-0 file:bg-slate-100 file:text-slate-700">
                                 </div>
                                 <button type="submit" class="w-full bg-slate-900 text-white font-bold py-3 rounded-lg text-sm hover:bg-slate-800">Envoyer ma candidature</button>
                             </form>

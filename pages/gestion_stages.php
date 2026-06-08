@@ -34,7 +34,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
 
     <main class="flex-grow p-8">
         <div class="max-w-6xl mx-auto flex flex-col gap-8">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold">Pipeline des Stages & Affiliations</h1>
                     <p class="text-xs text-slate-400">Validez les démarches des étudiants et assignez les tuteurs.</p>
@@ -44,12 +44,12 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-8">
                     <!-- 1. Demandes initiales -->
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden">
                         <div class="bg-slate-900 px-4 py-3"><h2 class="text-white font-bold text-sm">1. Nouvelles candidatures déclarées</h2></div>
                         <div class="p-4 space-y-3">
                             <?php if(empty($req_attente)): ?><p class="text-xs text-slate-400 italic">Rien à valider.</p><?php endif; ?>
                             <?php foreach($req_attente as $r): ?>
-                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-sm flex justify-between items-center">
+                                <div class="bg-slate-50 p-3 rounded-lg border-2 border-slate-200 text-sm flex justify-between items-center">
                                     <div>
                                          <span class="font-bold"><?= htmlspecialchars($r['prenom'].' '.$r['nom']) ?></span>
                                         <?php if($r['piece_jointe']): ?>
@@ -67,7 +67,7 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
                     </div>
 
                     <!-- 2. Lecture des résumés d'entretiens -->
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden">
                         <div class="bg-blue-900 px-4 py-3"><h2 class="text-white font-bold text-sm">2. Comptes-rendus d'entretiens à lire</h2></div>
                         <div class="p-4 space-y-3">
                             <?php if(empty($req_resumes)): ?><p class="text-xs text-slate-400 italic">Aucun compte-rendu en attente.</p><?php endif; ?>
@@ -87,12 +87,12 @@ $profs = $pdo->query("SELECT id_enseignant, nom, prenom FROM Enseignant WHERE st
 
                 <!-- 3. Affiliations -->
                 <div>
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden sticky top-24">
+                    <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden sticky top-24">
                         <div class="bg-emerald-900 px-4 py-3"><h2 class="text-white font-bold text-sm">3. Affiliation des Tuteurs (Stages validés)</h2></div>
                         <div class="p-4 space-y-3">
                             <?php if(empty($req_sans_tuteur)): ?><p class="text-xs text-slate-400 italic">Tous les étudiants ont un tuteur.</p><?php endif; ?>
                             <?php foreach($req_sans_tuteur as $etu): ?>
-                                <form action="../actions/admin_stages_action.php" method="POST" class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-sm">
+                                <form action="../actions/admin_stages_action.php" method="POST" class="bg-slate-50 p-3 rounded-lg border-2 border-slate-200 text-sm">
                                     <input type="hidden" name="action" value="affilier_tuteur">
                                     <input type="hidden" name="id_etudiant" value="<?= $etu['id_etudiant'] ?>">
                                     <p class="font-bold text-slate-800 mb-2"><?= htmlspecialchars($etu['prenom'].' '.$etu['nom']) ?> <span class="text-xs font-normal text-slate-500">(<?= htmlspecialchars($etu['entreprise']) ?>)</span></p>

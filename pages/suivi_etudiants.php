@@ -33,7 +33,7 @@ $etudiants = $stmt->fetchAll();
 
     <main class="flex-grow p-8">
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold">Mes Étudiants Affiliés</h1>
                     <p class="text-xs text-slate-400">Proposez et gérez les dates de soutenances de vos élèves.</p>
@@ -42,13 +42,13 @@ $etudiants = $stmt->fetchAll();
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <?php if (empty($etudiants)): ?>
-                    <p class="col-span-2 text-center text-slate-500 py-10 bg-white rounded-xl border border-slate-200">Aucun étudiant ne vous est affilié pour le moment.</p>
+                    <p class="col-span-2 text-center text-slate-500 py-10 bg-white rounded-xl border-2 border-slate-200">Aucun étudiant ne vous est affilié pour le moment.</p>
                 <?php else: foreach ($etudiants as $etu): ?>
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                         <h3 class="font-bold text-lg text-slate-800 mb-4"><?= htmlspecialchars($etu['prenom'] . ' ' . $etu['nom']) ?></h3>
                         
                         <?php if (!$etu['id_soutenance']): ?>
-                            <form action="../actions/proposer_soutenance_action.php" method="POST" class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm">
+                            <form action="../actions/proposer_soutenance_action.php" method="POST" class="bg-slate-50 p-4 rounded-lg border-2 border-slate-200 text-sm">
                                 <p class="font-semibold text-slate-600 mb-3">Planifier la soutenance :</p>
                                 <input type="hidden" name="id_etudiant" value="<?= $etu['id_etudiant'] ?>">
                                 <div class="grid grid-cols-2 gap-3 mb-3">
@@ -62,7 +62,7 @@ $etudiants = $stmt->fetchAll();
                                 <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2 rounded-md hover:bg-indigo-700">Soumettre au Responsable</button>
                             </form>
                         <?php else: ?>
-                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <div class="bg-slate-50 p-4 rounded-lg border-2 border-slate-200">
                                 <p class="text-sm"><span class="font-semibold">Date :</span> <?= date('d/m/Y', strtotime($etu['date_soutenance'])) ?> à <?= date('H:i', strtotime($etu['horaire'])) ?></p>
                                 <p class="text-sm mb-3"><span class="font-semibold">Lieu :</span> <?= htmlspecialchars($etu['lieu']) ?></p>
                                 

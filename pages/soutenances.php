@@ -27,14 +27,14 @@ $soutenance = $stmt->fetch();
 
     <main class="flex-grow p-8">
         <div class="max-w-3xl mx-auto flex flex-col gap-6">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold">Ma Soutenance</h1>
                     <p class="text-xs text-slate-400">Détails de votre convocation et évaluation.</p>
                 </div>
             </div>
 
-            <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+            <div class="bg-white p-8 rounded-xl border-2 border-slate-200 shadow-sm">
                 <?php if (!$soutenance): ?>
                     <div class="text-center py-10">
                         <p class="text-slate-500 font-medium">Votre tuteur n'a pas encore proposé de date pour votre soutenance.</p>

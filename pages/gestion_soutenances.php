@@ -30,14 +30,14 @@ $soutenances = $pdo->query($query)->fetchAll();
 
     <main class="flex-grow p-8">
         <div class="max-w-5xl mx-auto flex flex-col gap-8">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold">Validation des dates de Soutenance</h1>
                     <p class="text-xs text-slate-400">Approuvez les horaires proposés par les tuteurs.</p>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden">
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 font-bold uppercase tracking-wider">
                         <tr><th class="p-4">Étudiant</th><th class="p-4">Proposé par</th><th class="p-4">Date & Lieu</th><th class="p-4 text-right">Actions</th></tr>

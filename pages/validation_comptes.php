@@ -30,7 +30,7 @@ $profs_valides = $pdo->query("SELECT * FROM Enseignant WHERE statut_compte = 'va
 
     <main class="flex-grow p-8">
         <div class="max-w-6xl mx-auto flex flex-col gap-8">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold text-slate-900">Centre de Modération et Attribution des Rôles</h1>
                     <p class="text-xs text-slate-400">Gérez les inscriptions et affectez les pouvoirs pédagogiques.</p>
@@ -38,7 +38,7 @@ $profs_valides = $pdo->query("SELECT * FROM Enseignant WHERE statut_compte = 'va
             </div>
 
             <!-- TABLEAU 1 : NOUVELLES INSCRIPTIONS -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden">
                 <div class="bg-slate-900 px-6 py-4"><h2 class="text-white font-bold text-sm">1. Nouvelles Demandes d'Inscriptions Enseignants</h2></div>
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 font-bold uppercase tracking-wider">
@@ -62,7 +62,7 @@ $profs_valides = $pdo->query("SELECT * FROM Enseignant WHERE statut_compte = 'va
             </div>
 
             <!-- TABLEAU 2 : ATTRIBUTION DES RÔLES -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden">
                 <div class="bg-blue-900 px-6 py-4"><h2 class="text-white font-bold text-sm">2. Attribution des Rôles (Enseignants Actifs)</h2></div>
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 font-bold uppercase tracking-wider">

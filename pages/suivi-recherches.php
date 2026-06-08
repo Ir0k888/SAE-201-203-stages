@@ -28,7 +28,7 @@ $recherches = $stmt->fetchAll();
 
     <main class="flex-grow p-8">
         <div class="max-w-5xl mx-auto flex flex-col gap-6">
-            <div class="flex justify-between items-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between items-center bg-white p-6 rounded-xl border-2 border-slate-200 shadow-sm">
                 <div>
                     <h1 class="text-xl font-bold">Suivi de mes candidatures</h1>
                     <p class="text-xs text-slate-400">Gérez vos entretiens et validez vos offres de stage.</p>
@@ -42,7 +42,7 @@ $recherches = $stmt->fetchAll();
                 <?php endif; ?>
                 
                 <?php foreach ($recherches as $r): ?>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="bg-white p-5 rounded-xl borde-2 border-slate-200 shadow-sm flex flex-col justify-between">
                         <div>
                             <h3 class="font-bold text-lg"><?= htmlspecialchars($r['entreprise']) ?></h3>
                             <p class="text-sm text-slate-500 mb-3"><?= htmlspecialchars($r['poste']) ?></p>
@@ -55,7 +55,7 @@ $recherches = $stmt->fetchAll();
                                 <form action="../actions/etudiant_recherche_action.php" method="POST" class="mt-2">
                                     <input type="hidden" name="action" value="soumettre_resume">
                                     <input type="hidden" name="id_recherche" value="<?= $r['id_recherche'] ?>">
-                                    <textarea name="resume" required placeholder="Comment s'est passé l'entretien ? Avez-vous été retenu ?" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" rows="3"></textarea>
+                                    <textarea name="resume" required placeholder="Comment s'est passé l'entretien ? Avez-vous été retenu ?" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-3 py-2 text-sm mb-2" rows="3"></textarea>
                                     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg text-xs hover:bg-blue-700">Envoyer le compte-rendu</button>
                                 </form>
                             
