@@ -1,5 +1,7 @@
 # SAÉ 201/203 - Plateforme de Gestion des Stages MMI
 
+## Ce Projet a été réalisé par Alexis Dumoulin et Matt Rudman MMI1 TD2
+
 ## Présentation du projet
 Ce projet consiste à créer une application web complète permettant de gérer le suivi des stages pour le département MMI de l'IUT de Meaux. L'objectif est de remplacer l'outil actuel (ESUP) par une solution centralisée, moderne et interactive gérant les offres, les candidatures, le suivi des recherches, les évaluations et la planification des soutenances.
 
