@@ -2,22 +2,22 @@
 session_start();
 require_once '../config/database.php';
 
-// VERROU STRICT : Responsable de soutenance uniquement
-if (!isset($_SESSION['user_id']) || !str_contains($_SESSION['role'] ?? '', 'Responsable de soutenance')) {
-    die("Accès refusé.");
+// Sécurité : Seul l'Administrateur peut valider les dates
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Administrateur') {
+    die("Action non autorisée.");
 }
 
-$id_soutenance = $_GET['id'] ?? null;
-$action = $_GET['action'] ?? null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'valider') {
+    $id_soutenance = $_POST['id_soutenance'] ?? null;
 
-if ($id_soutenance && $action === 'valider') {
-    $stmt = $pdo->prepare("UPDATE Soutenance SET statut_soutenance = 'validee' WHERE id_soutenance = :id");
-    $stmt->execute(['id' => $id_soutenance]);
-} elseif ($id_soutenance && $action === 'refuser') {
-    $stmt = $pdo->prepare("DELETE FROM Soutenance WHERE id_soutenance = :id AND statut_soutenance = 'en_attente'");
-    $stmt->execute(['id' => $id_soutenance]);
+    if ($id_soutenance) {
+        // Mise à jour de "statut_soutenance" vers "validee" comme défini dans l'ENUM
+        $stmt = $pdo->prepare("UPDATE Soutenance SET statut_soutenance = 'validee' WHERE id_soutenance = ?");
+        $stmt->execute([$id_soutenance]);
+    }
 }
 
-header('Location: ../pages/gestion_soutenances.php');
+// Redirection vers la page admin des soutenances pour voir que la liste s'est bien vidée
+header('Location: ../pages/admin_soutenances.php');
 exit();
 ?>

@@ -5,6 +5,11 @@ $pages_path = $is_root ? 'pages/' : '';
 $role_check = $_SESSION['role'] ?? '';
 $type_compte_check = $_SESSION['type_compte'] ?? '';
 $photo_profil = $_SESSION['photo_profil'] ?? 'default.png';
+
+// Calcul des initiales
+$prenom_init = $_SESSION['prenom'] ?? 'U';
+$nom_init = $_SESSION['nom'] ?? 'S';
+$initiales = strtoupper(substr($prenom_init, 0, 1) . substr($nom_init, 0, 1));
 ?>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
@@ -29,6 +34,8 @@ $photo_profil = $_SESSION['photo_profil'] ?? 'default.png';
         
         <?php elseif ($role_check === 'Administrateur'): ?>
             <li><a href="<?= $pages_path ?>validation_comptes.php" class="text-slate-300 hover:text-white transition-colors">Comptes & Rôles</a></li>
+            <!-- LIEN POUR L'ADMIN VERS LES SOUTENANCES -->
+            <li><a href="<?= $pages_path ?>admin_soutenances.php" class="text-slate-300 hover:text-white transition-colors">Soutenances</a></li>
         
         <?php elseif ($type_compte_check === 'enseignant'): ?>
             <li><a href="<?= $pages_path ?>offres.php" class="text-slate-300 hover:text-white transition-colors">Gérer les Offres</a></li>
@@ -43,7 +50,12 @@ $photo_profil = $_SESSION['photo_profil'] ?? 'default.png';
     </ul>
 
     <div class="flex items-center justify-end gap-6 w-1/4">
-        <div class="flex items-center gap-3 border-r border-slate-700 pr-6">
+        <div class="flex items-center gap-4 border-r border-slate-700 pr-6">
+            <!-- INITIALES AJOUTÉES ICI -->
+            <span title="Vos initiales" class="flex items-center justify-center w-10 h-10 bg-slate-800 rounded-lg border-2 border-slate-700 text-sm font-black text-rose-500 shadow-sm">
+                <?= $initiales ?>
+            </span>
+            
             <a href="<?= $pages_path ?>profil.php" class="block w-10 h-10 rounded-full overflow-hidden border-2 border-slate-700 hover:border-rose-400 transition-colors bg-slate-800">
                 <img src="<?= $root_path ?>assets/uploads/<?= htmlspecialchars($photo_profil) ?>" 
                      onerror="this.src='https://ui-avatars.com/api/?name=Profil&background=0f172a&color=fff'" 

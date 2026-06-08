@@ -8,26 +8,22 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-    $id = $_SESSION['user_id'];
-    $table = ($_SESSION['type_compte'] === 'etudiant') ? 'Etudiant' : 'Enseignant';
-    $col_id = ($_SESSION['type_compte'] === 'etudiant') ? 'id_etudiant' : 'id_enseignant';
+    $id_user = $_SESSION['user_id'];
+    $type_compte = $_POST['type_compte'] ?? '';
 
-    if ($action === 'accepter') {
-        $stmt = $pdo->prepare("UPDATE $table SET politique_acceptee = 1 WHERE $col_id = ?");
-        $stmt->execute([$id]);
+    // Définir la bonne table
+    $table = ($type_compte === 'enseignant') ? 'Enseignant' : 'Etudiant';
+    $id_col = ($type_compte === 'enseignant') ? 'id_enseignant' : 'id_etudiant';
+
+    // Mettre à jour la base de données
+    $stmt = $pdo->prepare("UPDATE $table SET politique_acceptee = 1 WHERE $id_col = ?");
+    if ($stmt->execute([$id_user])) {
+        // Mettre à jour la session
         $_SESSION['politique_acceptee'] = 1;
-        
-        // Redirection unique
-        header("Location: ../index.php");
-        exit();
-    } elseif ($action === 'refuser') {
-        session_unset();
-        session_destroy();
-        header('Location: ../login.php?msg=refus_politique');
-        exit();
     }
 }
+
+// Rediriger vers l'accueil
 header('Location: ../index.php');
 exit();
 ?>
